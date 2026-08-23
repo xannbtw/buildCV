@@ -1,8 +1,8 @@
-# 🚀 OptimizadorCV (SaaS)
+# 🚀 BuilCV
 
-OptimizadorCV es una plataforma SaaS (Software as a Service) diseñada para adaptar y optimizar currículums vitae utilizando Inteligencia Artificial. La aplicación extrae la información de un CV en formato PDF, la procesa y permite a los usuarios generar versiones adaptadas específicamente a diferentes ofertas laborales mediante el modelo Gemini de Google.
+BuildCV es una plataforma diseñada para adaptar y optimizar currículums vitae utilizando Inteligencia Artificial. La aplicación extrae la información de un CV en formato PDF, la procesa y permite a los usuarios generar versiones adaptadas específicamente a diferentes ofertas laborales mediante el modelo Gemini de Google.
 
-El frontend presenta una interfaz moderna y un renderizado en tiempo real basado en el estándar profesional "Jake Ryan" (Harvard), mientras que el backend en Python orquesta la extracción y la IA.
+El frontend presenta una interfaz moderna y un renderizado en tiempo real basado en el estándar profesional "Jake Ryan", mientras que el backend en Python orquesta la extracción y la IA.
 
 ## ✨ Características Principales
 
