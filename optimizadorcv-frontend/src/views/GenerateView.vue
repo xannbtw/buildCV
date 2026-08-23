@@ -14,7 +14,7 @@ const generarconIA = async () => {
 
   try {
     // Llamada HTTP al servidor Python
-    const response = await fetch('http://localhost:8000/api/generar-cv', {
+    const response = await fetch('https://buildcv-production-f12c.up.railway.app/api/generar-cv', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

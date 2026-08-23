@@ -26,7 +26,7 @@ app = FastAPI()
 # configuracion CORS para conectar back con front
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173", "https://optimizadorcv-frontend-ufxe-theta.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

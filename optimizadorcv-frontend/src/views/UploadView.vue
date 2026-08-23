@@ -38,7 +38,7 @@ const processCV = async () => {
   formData.append('file', uploadedFile.value)
 
   try {
-    const response = await fetch('http://localhost:8000/api/procesar-pdf', {
+    const response = await fetch('https://buildcv-production-f12c.up.railway.app/api/procesar-pdf', {
       method: 'POST',
       body: formData
     })
