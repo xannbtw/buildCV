@@ -1,0 +1,13 @@
+# Ignorar dependencias de Node (Frontend)
+frontend/node_modules/
+frontend/dist/
+
+# Ignorar entornos virtuales y caché de Python (Backend)
+backend/venv/
+backend/__pycache__/
+backend/.pytest_cache/
+
+# Ignorar archivos con variables de entorno y claves secretas
+.env
+backend/.env
+frontend/.env
