@@ -115,6 +115,38 @@ const emit = defineEmits<{
     isProcessing.value = false
   }
 }
+
+const agregarExperiencia = () => {
+  if (!cvData.value.experience) cvData.value.experience = []
+  cvData.value.experience.push({
+    position: 'Nuevo Cargo',
+    company: 'Nueva Empresa',
+    date: 'Fecha de Inicio - Fecha Fin',
+    location: 'Ciudad',
+    description: 'Descripción de responsabilidades y logros.'
+  })
+}
+
+const eliminarExperiencia = (index) => {
+  if (cvData.value.experience) {
+    cvData.value.experience.splice(index, 1)
+  }
+}
+
+const agregarEducacion = () => {
+  if (!cvData.value.education) cvData.value.education = []
+  cvData.value.education.push({
+    institution: 'Nueva Institución',
+    degree: 'Título Obtenido',
+    date: 'Fecha de Inicio - Fecha de Fin'
+  })
+}
+
+const eliminarEducacion = (index) => {
+  if (cvData.value.education) {
+    cvData.value.education.splice(index, 1)
+  }
+}
 </script>
 
 <template>
@@ -151,14 +183,67 @@ const emit = defineEmits<{
             <label class="text-xs text-zinc-600">Título Profesional</label>
             <input v-model="cvData.personal.jobTitle" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
           </div>
+          <div>
+            <label class="text-xs text-zinc-600">Correo Electronico</label>
+            <input v-model="cvData.personal.email" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
+          </div>
+          <div>
+            <label class="text-xs text-zinc-600">Telefono</label>
+            <input v-model="cvData.personal.phone" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
+          </div>
+        </div>
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm text-zinc-600">Experiencia Laboral</h3>
+            <!-- Botón para Añadir -->
+            <button @click="agregarExperiencia" class="text-xs bg-zinc-200 hover:bg-zinc-200 text-zinc-600 px-2 py-1 rounded transition-colors">+ Añadir experiencia</button>
+          </div>
+          
+          <div class="flex flex-col gap-4">
+            <div v-for="(job, index) in cvData.experience" :key="index" class="bg-zinc-200 p-3 rounded-lg border border-gray-800 relative">
+              
+              <!-- Botón de Eliminar (la X en la esquina) -->
+              <button @click="eliminarExperiencia(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-400 text-xs font-bold">✕</button>
+              
+              <div class="grid grid-cols-2 gap-2 mb-2 pr-4">
+                <input v-model="job.company" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Empresa" />
+                <input v-model="job.position" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Cargo" />
+              </div>
+              
+              <div class="grid grid-cols-2 gap-2 mb-2">
+                <input v-model="job.date" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Ej: Ene 2023 - Presente" />
+                <input v-model="job.location" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Ubicación" />
+              </div>
+              
+              <textarea v-model="job.description" class="w-full bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm min-h-[80px]" placeholder="Descripción de tus responsabilidades..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm text-zinc-600">Educacion</h3>
+            <!-- Botón para Añadir -->
+            <button @click="agregarEducacion" class="text-xs bg-zinc-200 hover:bg-zinc-200 text-zinc-600 px-2 py-1 rounded transition-colors">+ Añadir educacion</button>
+          </div>
+          
+          <div class="flex flex-col gap-4">
+            <div v-for="(job, index) in cvData.education" :key="index" class="bg-zinc-200 p-3 rounded-lg border border-gray-800 relative">
+              
+              <!-- Botón de Eliminar (la X en la esquina) -->
+              <button @click="eliminarEducacion(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-400 text-xs font-bold">✕</button>
+              
+              <div class="grid grid-cols-2 gap-2 mb-2 pr-4">
+                <input v-model="job.institution" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Institucion" />
+                <input v-model="job.degree" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Grado" />
+              </div>
+              
+              <div class="grid grid-cols-2 gap-2 mb-2">
+                <input v-model="job.date" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Ej: Ene 2023 - Presente" />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <h3 class="text-lg font-medium mb-4 text-zinc-600">Experiencia Laboral</h3>
-        <div v-for="(job, index) in cvData.experience" :key="index" class="bg-zinc-200 p-4 border border-zinc-800 rounded mb-4">
-          <input v-model="job.position" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600 mb-2" placeholder="Cargo" />
-          <input v-model="job.company" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600 mb-2" placeholder="Empresa" />
-          <textarea v-model="job.description" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600 text-sm" rows="3"></textarea>
-        </div>
       </div>
 
 <!-- LA HOJA DE PAPEL DINÁMICA -->
