@@ -127,7 +127,7 @@ const agregarExperiencia = () => {
   })
 }
 
-const eliminarExperiencia = (index) => {
+const eliminarExperiencia = (index: number) => {
   if (cvData.value.experience) {
     cvData.value.experience.splice(index, 1)
   }
@@ -142,7 +142,7 @@ const agregarEducacion = () => {
   })
 }
 
-const eliminarEducacion = (index) => {
+const eliminarEducacion = (index: number) => {
   if (cvData.value.education) {
     cvData.value.education.splice(index, 1)
   }
@@ -195,14 +195,12 @@ const eliminarEducacion = (index) => {
         <div class="mb-6">
           <div class="flex justify-between items-center mb-3">
             <h3 class="text-sm text-zinc-600">Experiencia Laboral</h3>
-            <!-- Botón para Añadir -->
             <button @click="agregarExperiencia" class="text-xs bg-zinc-200 hover:bg-zinc-200 text-zinc-600 px-2 py-1 rounded transition-colors">+ Añadir experiencia</button>
           </div>
           
           <div class="flex flex-col gap-4">
             <div v-for="(job, index) in cvData.experience" :key="index" class="bg-zinc-200 p-3 rounded-lg border border-gray-800 relative">
               
-              <!-- Botón de Eliminar (la X en la esquina) -->
               <button @click="eliminarExperiencia(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-400 text-xs font-bold">✕</button>
               
               <div class="grid grid-cols-2 gap-2 mb-2 pr-4">
@@ -222,14 +220,12 @@ const eliminarEducacion = (index) => {
         <div class="mb-6">
           <div class="flex justify-between items-center mb-3">
             <h3 class="text-sm text-zinc-600">Educacion</h3>
-            <!-- Botón para Añadir -->
             <button @click="agregarEducacion" class="text-xs bg-zinc-200 hover:bg-zinc-200 text-zinc-600 px-2 py-1 rounded transition-colors">+ Añadir educacion</button>
           </div>
           
           <div class="flex flex-col gap-4">
             <div v-for="(job, index) in cvData.education" :key="index" class="bg-zinc-200 p-3 rounded-lg border border-gray-800 relative">
               
-              <!-- Botón de Eliminar (la X en la esquina) -->
               <button @click="eliminarEducacion(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-400 text-xs font-bold">✕</button>
               
               <div class="grid grid-cols-2 gap-2 mb-2 pr-4">
@@ -246,7 +242,7 @@ const eliminarEducacion = (index) => {
 
       </div>
 
-<!-- LA HOJA DE PAPEL DINÁMICA -->
+<!-- VISTA PREVIA -->
       <div class="bg-white w-full max-w-[21cm] aspect-[1/1.414] shadow-2xl p-10 text-black font-sans overflow-y-auto">
         
         <!-- Cabecera Dinámica -->
