@@ -121,7 +121,7 @@ const emit = defineEmits<{
   <div>
     <header class="mb-6 flex justify-between items-center">
       <div>
-        <h2 class="text-2xl font-semibold text-white">Revisa tu CV optimizado</h2>
+        <h2 class="text-2xl font-semibold text-zinc-900">Revisa tu CV</h2>
       </div>
       <div class="flex gap-3">
         <button
@@ -140,24 +140,24 @@ const emit = defineEmits<{
     </header>
 
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 h-[700px] overflow-y-auto">
-        <h3 class="text-lg font-medium mb-4 text-[#89CFF0]">Datos Personales</h3>
+      <div class="bg-zinc-200 border border-zinc-800 rounded-xl p-6 h-[700px] overflow-y-auto">
+        <h3 class="text-lg font-medium mb-4 text-zinc-500">Datos Personales</h3>
         <div class="space-y-4 mb-8">
           <div>
-            <label class="text-xs text-zinc-400">Nombre Completo</label>
-            <input v-model="cvData.personal.fullName" class="w-full bg-zinc-950 border border-zinc-800 rounded p-2 text-white" />
+            <label class="text-xs text-zinc-600">Nombre Completo</label>
+            <input v-model="cvData.personal.fullName" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
           </div>
           <div>
-            <label class="text-xs text-zinc-400">Título Profesional</label>
-            <input v-model="cvData.personal.jobTitle" class="w-full bg-zinc-950 border border-zinc-800 rounded p-2 text-white" />
+            <label class="text-xs text-zinc-600">Título Profesional</label>
+            <input v-model="cvData.personal.jobTitle" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
           </div>
         </div>
 
-        <h3 class="text-lg font-medium mb-4 text-[#89CFF0]">Experiencia Laboral</h3>
-        <div v-for="(job, index) in cvData.experience" :key="index" class="bg-zinc-950/50 p-4 border border-zinc-800 rounded mb-4">
-          <input v-model="job.position" class="w-full bg-zinc-900 border border-zinc-800 rounded p-2 text-white mb-2" placeholder="Cargo" />
-          <input v-model="job.company" class="w-full bg-zinc-900 border border-zinc-800 rounded p-2 text-white mb-2" placeholder="Empresa" />
-          <textarea v-model="job.description" class="w-full bg-zinc-900 border border-zinc-800 rounded p-2 text-white text-sm" rows="3"></textarea>
+        <h3 class="text-lg font-medium mb-4 text-zinc-600">Experiencia Laboral</h3>
+        <div v-for="(job, index) in cvData.experience" :key="index" class="bg-zinc-200 p-4 border border-zinc-800 rounded mb-4">
+          <input v-model="job.position" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600 mb-2" placeholder="Cargo" />
+          <input v-model="job.company" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600 mb-2" placeholder="Empresa" />
+          <textarea v-model="job.description" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600 text-sm" rows="3"></textarea>
         </div>
       </div>
 

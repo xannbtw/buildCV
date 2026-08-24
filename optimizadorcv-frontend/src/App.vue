@@ -95,10 +95,10 @@ const cargarDatos = async () => {
         </h1>
         
         <nav class="mt-8 flex flex-col gap-2">
-          <a href="#" @click="changeView('upload'); menuAbierto = false" class="px-4 py-2 cursor-pointer hover:bg-zinc-100 hover:text-black rounded-lg text-zinc-400 font-medium active transition-colors">Crear nuevo CV</a>
-          <a href="#" @click="changeView('templates'); menuAbierto = false" class="px-4 py-2 cursor-pointer hover:bg-zinc-100 hover:text-black rounded-lg text-zinc-400 font-medium transition-colors">Plantillas</a>
-          <a href="#" @click="changeView('saved'); menuAbierto = false" :class="['px-4 py-2 cursor-pointer rounded-lg transition-colors', currentView === 'saved' ? 'bg-zinc-100 text-black' : 'text-zinc-400 hover:bg-zinc-100 hover:text-black']">Mis CVs guardados</a>
-          <a href="#" @click="changeView('generate'); menuAbierto = false" class="px-4 py-2 cursor-pointer hover:bg-zinc-100 hover:text-black rounded-lg text-zinc-400 transition-colors">Generar CV</a>
+          <a href="#" @click="changeView('upload'); menuAbierto = false" class="px-4 py-2 cursor-pointer hover:bg-zinc-100 hover:text-black rounded-lg text-zinc-500 font-medium active transition-colors">Crear nuevo CV</a>
+          <a href="#" @click="changeView('templates'); menuAbierto = false" class="px-4 py-2 cursor-pointer hover:bg-zinc-100 hover:text-black rounded-lg text-zinc-500 font-medium transition-colors">Plantillas</a>
+          <a href="#" @click="changeView('saved'); menuAbierto = false" :class="['px-4 py-2 cursor-pointer rounded-lg transition-colors', currentView === 'saved' ? 'bg-zinc-100 text-black' : 'text-zinc-500 hover:bg-zinc-100 hover:text-black']">Mis CVs guardados</a>
+          <a href="#" @click="changeView('generate'); menuAbierto = false" class="px-4 py-2 cursor-pointer hover:bg-zinc-100 hover:text-black rounded-lg text-zinc-500 transition-colors">Generar CV</a>
         </nav>
         
         <div class="mt-auto pt-6 border-t border-zinc-200">

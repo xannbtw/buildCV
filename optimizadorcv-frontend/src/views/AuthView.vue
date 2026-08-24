@@ -65,17 +65,18 @@ const handleAuth = async () => {
 </script>
 
 <template>
-    <div class="max-w-md mx-auto mt-20 p-8 bg-zinc-900 border border-zinc-800 rounded-xl">
-        <h2 class="text-2xl font-bold text-zinc-100 mb-6">
+    <div class="flex min-h-full flex-col justify-center px6 py-50 lg:px8">
+        <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-zinc-900">
             {{ isLogin ? 'Bienvenido de nuevo' : 'Crear cuenta' }}
         </h2>
 
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form @submit.prevent="handleAuth" class="space-y-6">
             <input 
                 v-model="email" 
                 type="email" 
                 placeholder="Correo electrónico" 
-                class="w-full px-4 py-3 bg-zinc-950 border border-zinc-700 rounded-lg text-zinc-200 placeholder-zinc-500 focus:border-[#89CFF0] focus:outline-none"
+                class="w-full px-4 py-3 bg-zinc-100 border border-zinc-200 rounded-lg text-zinc-700 placeholder-zinc-500 focus:border-[#89CFF0] focus:outline-none"
                 required
             />
             
@@ -83,12 +84,12 @@ const handleAuth = async () => {
                 v-model="password" 
                 type="password" 
                 placeholder="Contraseña" 
-                class="w-full px-4 py-3 bg-zinc-950 border border-zinc-700 rounded-lg text-zinc-200 placeholder-zinc-500 focus:border-[#89CFF0] focus:outline-none"
+                class="w-full px-4 py-3 bg-zinc-100 border border-zinc-200 rounded-lg text-zinc-700 placeholder-zinc-500 focus:border-[#89CFF0] focus:outline-none"
                 required
                 minlength="6"
             />
 
-            <div v-if="errorMessage" class="bg-red-900/30 border border-red-700/50 text-red-300 p-3 rounded-lg text-sm">
+            <div v-if="errorMessage" class="bg-red-900/10 border border-red-700/50 text-red-400 p-3 rounded-lg text-sm">
                 {{ errorMessage }}
             </div>
 
@@ -106,6 +107,7 @@ const handleAuth = async () => {
                 {{ isLogin ? 'Regístrate aquí' : 'Inicia sesión aquí' }}
             </a>
         </p>
+      </div>
     </div>
 
 </template>
