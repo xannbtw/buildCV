@@ -38,6 +38,8 @@ const cargarCVGuardado = (cvGuardado: any) => {
   // Emitimos el evento correcto
   emit('select-cv', cvGuardado)
 }
+
+
 </script>
 
 <template>

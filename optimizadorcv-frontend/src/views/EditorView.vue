@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { supabase } from '../supabase'
 import { savedCVs, cvData, currentCvId, isProcessing, currentUser } from '../store'
+import html2pdf from 'html2pdf.js'
 
 const emit = defineEmits<{
   (e: 'saved'): void
@@ -147,6 +148,19 @@ const eliminarEducacion = (index: number) => {
     cvData.value.education.splice(index, 1)
   }
 }
+
+const descargarPDF = () => {
+  const elemento = document.getElementById('cv-preview') as HTMLElement
+  const opciones: any = {
+    margin: 0,
+    filename: `${cvData.value.personal.fullName || 'CV'}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2, useCORS: true, scrollY: 0, scrollX: 0 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }
+  html2pdf().set(opciones).from(elemento).save()
+}
+
 </script>
 
 <template>
@@ -165,7 +179,7 @@ const eliminarEducacion = (index: number) => {
           </svg>
           Guardar CV
         </button>
-        <button class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-medium flex items-center gap-2">
+        <button @click="descargarPDF" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-medium flex items-center gap-2">
           Descargar PDF
         </button>
       </div>
@@ -242,61 +256,63 @@ const eliminarEducacion = (index: number) => {
 
       </div>
 
-<!-- VISTA PREVIA -->
-      <div class="bg-white w-full max-w-[21cm] aspect-[1/1.414] shadow-2xl p-10 text-black font-sans overflow-y-auto">
-        
-        <!-- Cabecera Dinámica -->
-        <header class="text-center mb-6">
-          <h1 class="text-4xl font-bold text-gray-900 mb-1 tracking-tight">{{ cvData.personal?.fullName || 'Tu Nombre' }}</h1>
-          <p class="text-sm text-gray-600">
-            {{ cvData.personal?.jobTitle || 'Título Profesional' }}
-            <span v-if="cvData.personal?.email" class="mx-2">|</span> 
-            {{ cvData.personal?.email || '' }}
-            <span v-if="cvData.personal?.phone" class="mx-2">|</span> 
-            {{ cvData.personal?.phone || '' }}
-          </p>
-        </header>
-
-        <!-- Sección: Experiencia Dinámica -->
-        <section class="mb-6">
-          <h2 class="text-xs font-bold text-gray-900 uppercase tracking-widest border-b-[1.5px] border-gray-900 pb-1 mb-3">
-            Experiencia Laboral
-          </h2>
+      <!-- VISTA PREVIA -->
+      <div class="w-full max-w-[21cm] h-full max-h-[85vh] overflow-y-auto shadow-2xl mx-auto">
+        <div id="cv-preview" class="bg-[#ffffff] w-full max-w-[21cm] aspect-[1/1.414] shadow-2xl p-10 text-[#000000] font-sans overflow-y-auto">
           
-          <div v-for="(job, index) in cvData.experience" :key="index" class="mb-4">
-            <!-- Empresa y Fechas Reales -->
-            <div class="flex justify-between items-baseline">
-              <h3 class="text-sm font-bold text-gray-900">{{ job.company || 'Nombre de la Empresa' }}</h3>
-              <span class="text-xs text-gray-600 font-medium">{{ job.date || 'Fecha no especificada' }}</span>
-            </div>
-            
-            <!-- Cargo y Ubicación Reales -->
-            <div class="flex justify-between items-baseline mb-1">
-              <p class="text-sm italic text-gray-800">{{ job.position || 'Tu Cargo' }}</p>
-              <span class="text-xs text-gray-600">{{ job.location || '' }}</span>
-            </div>
-            
-            <div class="text-sm text-gray-700 leading-relaxed mt-1 pl-4 relative">
-              <span class="absolute left-0 top-[6px] w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
-              {{ job.description }}
-            </div>
-          </div>
-        </section>
+          <!-- Cabecera Dinámica -->
+          <header class="text-center mb-6">
+            <h1 class="text-4xl font-bold text-[#111827] mb-1 tracking-tight">{{ cvData.personal?.fullName || 'Tu Nombre' }}</h1>
+            <p class="text-sm text-[#4b5563]">
+              {{ cvData.personal?.jobTitle || 'Título Profesional' }}
+              <span v-if="cvData.personal?.email" class="mx-2">|</span> 
+              {{ cvData.personal?.email || '' }}
+              <span v-if="cvData.personal?.phone" class="mx-2">|</span> 
+              {{ cvData.personal?.phone || '' }}
+            </p>
+          </header>
 
-        <!-- Sección: Educación Dinámica (Solo se muestra si hay datos) -->
-        <section v-if="cvData.education && cvData.education.length > 0" class="mb-6">
-          <h2 class="text-xs font-bold text-gray-900 uppercase tracking-widest border-b-[1.5px] border-gray-900 pb-1 mb-3">
-            Educación
-          </h2>
-          <div v-for="(edu, index) in cvData.education" :key="index" class="mb-3">
-            <div class="flex justify-between items-baseline">
-              <h3 class="text-sm font-bold text-gray-900">{{ edu.institution || 'Institución' }}</h3>
-              <span class="text-xs text-gray-600 font-medium">{{ edu.date || '' }}</span>
+          <!-- Sección: Experiencia Dinámica -->
+          <section class="mb-6">
+            <h2 class="text-xs font-bold text-[#111827] uppercase tracking-widest border-b-[1.5px] border-[#111827] pb-1 mb-3">
+              Experiencia Laboral
+            </h2>
+            
+            <div v-for="(job, index) in cvData.experience" :key="index" class="mb-4">
+              <!-- Empresa y Fechas Reales -->
+              <div class="flex justify-between items-baseline">
+                <h3 class="text-sm font-bold text-[#111827]">{{ job.company || 'Nombre de la Empresa' }}</h3>
+                <span class="text-xs text-[#4b5563] font-medium">{{ job.date || 'Fecha no especificada' }}</span>
+              </div>
+              
+              <!-- Cargo y Ubicación Reales -->
+              <div class="flex justify-between items-baseline mb-1">
+                <p class="text-sm italic text-[#1f2937]">{{ job.position || 'Tu Cargo' }}</p>
+                <span class="text-xs text-[#4b5563]">{{ job.location || '' }}</span>
+              </div>
+              
+              <div class="text-sm text-[#374151] leading-relaxed mt-1 pl-4 relative">
+                <span class="absolute left-0 top-[6px] w-1.5 h-1.5 bg-[#6b7280] rounded-full"></span>
+                {{ job.description }}
+              </div>
             </div>
-            <p class="text-sm italic text-gray-800">{{ edu.degree || 'Título obtenido' }}</p>
-          </div>
-        </section>
+          </section>
 
+          <!-- Sección: Educación Dinámica (Solo se muestra si hay datos) -->
+          <section v-if="cvData.education && cvData.education.length > 0" class="mb-6">
+            <h2 class="text-xs font-bold text-[#111827] uppercase tracking-widest border-b-[1.5px] border-[#111827] pb-1 mb-3">
+              Educación
+            </h2>
+            <div v-for="(edu, index) in cvData.education" :key="index" class="mb-3">
+              <div class="flex justify-between items-baseline">
+                <h3 class="text-sm font-bold text-[#111827]">{{ edu.institution || 'Institución' }}</h3>
+                <span class="text-xs text-[#4b5563] font-medium">{{ edu.date || '' }}</span>
+              </div>
+              <p class="text-sm italic text-[#1f2937]">{{ edu.degree || 'Título obtenido' }}</p>
+            </div>
+          </section>
+
+        </div>
       </div>
     </div>
   </div>
