@@ -1,39 +1,20 @@
-# 🚀 BuilCV
+# 🚀 BuildCV
 
-BuildCV es una plataforma diseñada para adaptar y optimizar currículums vitae utilizando Inteligencia Artificial. La aplicación extrae la información de un CV en formato PDF, la procesa y permite a los usuarios generar versiones adaptadas específicamente a diferentes ofertas laborales mediante el modelo Gemini de Google.
+BuildCV es una plataforma SaaS diseñada para revolucionar la creación y adaptación de currículums vitae utilizando Inteligencia Artificial. La aplicación extrae la información de un CV base, la procesa a través de AI y genera versiones altamente optimizadas enfocadas en los requerimientos específicos de cualquier oferta laboral.
 
-El frontend presenta una interfaz moderna y un renderizado en tiempo real basado en el estándar profesional "Jake Ryan", mientras que el backend en Python orquesta la extracción y la IA.
+Con un enfoque en la usabilidad, la plataforma ofrece un editor visual dinámico donde el usuario tiene el control total de su información antes de generar el documento final listo para postular.
 
 ## ✨ Características Principales
 
-- **Extracción de PDF con IA:** Lectura inteligente de archivos PDF para estructurar datos (personales, experiencia, educación) en formato JSON.
-- **Optimización con Gemini AI:** Reescritura adaptativa de la experiencia laboral enfocada en los requerimientos específicos de un *prompt* o vacante.
-- **Autenticación Segura:** Sistema de Login/Registro gestionado mediante Supabase Auth.
-- **Almacenamiento Privado en la Nube:** Base de datos PostgreSQL con políticas RLS (Row Level Security) que garantizan que cada usuario solo pueda acceder a sus propios documentos.
-- **Renderizado Profesional:** Plantilla de currículum limpia, minimalista y amigable con sistemas ATS (Applicant Tracking Systems).
+- **Motor de Inteligencia Artificial:** Integración con Gemini Flash para la reescritura adaptativa y estructuración inteligente de perfiles profesionales.
+- **Editor Dinámico en Tiempo Real:** Interfaz reactiva que permite modificar datos de contacto y gestionar (añadir/eliminar) bloques de experiencia laboral y educación al instante.
+- **Exportación Nativa a PDF:** Renderizado del currículum en formato A4 estricto desde el cliente, manteniendo un diseño minimalista optimizado para sistemas ATS (Applicant Tracking Systems).
+- **Experiencia Responsiva:** Interfaz de usuario (UI) completamente adaptada a dispositivos móviles, con navegación fluida y menús colapsables.
+- **Seguridad en la Nube:** Autenticación de usuarios y almacenamiento de datos gestionado por Supabase, utilizando políticas RLS para garantizar la privacidad de los documentos.
 
 ## 🛠️ Stack Tecnológico
 
-**Frontend:**
-- Vue 3 (Composition API) + TypeScript
-- Tailwind CSS (Estilizado con sistema de valores arbitrarios y variables de marca)
-- Vite
-
-**Backend:**
-- Python 3
-- FastAPI (API RESTful)
-- Google GenAI SDK (Gemini Flash)
-- PyPDF (Lectura de documentos)
-
-**Base de Datos y Auth:**
-- Supabase (PostgreSQL)
-
-## 📁 Estructura del Proyecto (Monorepo)
-
-```text
-buildCV/
-├── optimizadorcv-frontend/ # Aplicación de usuario (Vue 3)
-│   ├── src/        # Vistas, Componentes y Store global
-│   └── supabase.ts # Conexión con la BD
-└── optimizadorcv-backend/ # Lógica de servidor e IA (FastAPI)
-    └── main.py     # Endpoints y Prompts para Gemini
+- **Frontend:** Vue 3 (Composition API), TypeScript, Tailwind CSS, `html2pdf.js`.
+- **Backend:** Python 3, FastAPI, Google GenAI SDK, PyPDF.
+- **Base de Datos y Auth:** Supabase (PostgreSQL).
+- **Infraestructura de Despliegue:** Frontend alojado en Vercel y API Backend orquestada en Railway.
