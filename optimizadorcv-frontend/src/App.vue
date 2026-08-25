@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { supabase } from './supabase'
-import { savedCVs, currentUser } from './store' // Importamos la memoria central
+import { savedCVs, currentUser } from './store'
 
-// Importamos las nuevas vistas
 import AuthView from './views/AuthView.vue'
 import UploadView from './views/UploadView.vue'
 import TemplatesView from './views/TemplatesView.vue'
@@ -25,7 +24,7 @@ const cerrarSesion = async () => {
   savedCVs.value = []
 }
 
-// Carga inicial de Supabase (Se queda aquí porque es global)
+// Carga supabase
 onMounted(async () => {
   const { data: { session } } = await supabase.auth.getSession()
 
@@ -58,10 +57,8 @@ const cargarDatos = async () => {
 
   <AuthView v-if="!currentUser" @logged-in="changeView('upload')" />
   
-<!-- 1. CAMBIO CLAVE AQUÍ: flex-col para celular, lg:flex-row para PC -->
     <div v-else class="min-h-screen text-zinc-100 flex flex-col lg:flex-row font-sans">
       
-      <!-- 2. CABECERA MÓVIL (Con fondo blanco y logo) -->
       <header class="lg:hidden flex items-center justify-between bg-white p-4 w-full border-b border-zinc-200">
         <h1 class="text-xl font-bold text-black tracking-wider">
           Build<span class="text-[#89CFF0]">CV</span>
@@ -76,14 +73,12 @@ const cargarDatos = async () => {
         </button>
       </header>
 
-      <!-- 3. FONDO OSCURO DEL MENÚ MÓVIL -->
       <div 
         v-if="menuAbierto" 
         @click="menuAbierto = false" 
         class="fixed inset-0 bg-black/40 z-40 lg:hidden"
       ></div>
       
-      <!-- 4. TU ASIDE INTACTO -->
       <aside :class="[
           'w-80 border-r border-zinc-200 p-6 flex flex-col gap-4 bg-white',
           'fixed inset-y-0 left-0 z-50 transition-transform duration-300 ease-in-out',
@@ -117,18 +112,14 @@ const cargarDatos = async () => {
       </aside>
 
     <main class="flex-1 p-6 md:p-10 overflow-y-auto">
-      <!-- Cuando termine de procesar, llévame al editor -->
       <UploadView v-if="currentView === 'upload'" @processed="changeView('editor')" />
       
       <TemplatesView v-else-if="currentView === 'templates'" />
       
-      <!-- Cuando seleccione un CV, llévame al editor -->
       <SavedView v-else-if="currentView === 'saved'" @select-cv="changeView('editor')" />
       
-      <!-- Cuando termine de generar, llévame al editor -->
       <GenerateView v-else-if="currentView === 'generate'" @generated="changeView('editor')" />
       
-      <!-- Cuando guarde, devuélveme a la galería de guardados -->
       <EditorView v-else-if="currentView === 'editor'" @saved="changeView('saved')" />
     </main>
   </div>

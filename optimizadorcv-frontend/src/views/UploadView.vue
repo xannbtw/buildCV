@@ -97,12 +97,12 @@ const processCV = async () => {
 
       <div v-else class="flex flex-col items-center">
         <div v-if="!isProcessing">
-          <p class="text-xl text-zinc-200 font-medium mb-2">{{ uploadedFile.name }}</p>
+          <p class="text-xl text-zinc-600 font-medium mb-2">{{ uploadedFile.name }}</p>
           <div class="flex gap-4 mt-6 justify-center">
-            <button @click="resetUpload" class="text-zinc-400 hover:text-white px-4 py-2 transition-colors">
+            <button @click="resetUpload" class="text-zinc-500 hover:text-zinc-400 px-4 py-2 transition-colors">
               Cambiar archivo
             </button>
-            <button @click="processCV" class="bg-b[#89CFF0] hover:bg-[#89CFF0] text-white px-8 py-2 rounded-xl font-medium transition-colors">
+            <button @click="processCV" class="bg-[#89CFF0] hover:bg-[#89CFF0]/80 text-zinc-100 px-8 py-2 rounded-xl font-medium transition-colors">
               Procesar con IA
             </button>
           </div>
