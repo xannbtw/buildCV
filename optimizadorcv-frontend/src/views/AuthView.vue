@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import { supabase } from '../supabase'
 import { currentUser } from '../store'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const email = ref('')
 const password = ref('')
@@ -32,6 +34,7 @@ const handleAuth = async () => {
       if (error) throw error
       
       currentUser.value = data.user
+      router.push('/dashboard')
       emit('logged-in')
       
     } else {
