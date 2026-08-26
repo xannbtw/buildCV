@@ -24,7 +24,7 @@ const cerrarSesion = async () => {
   currentUser.value = null
   savedCVs.value = []
   router.push('/login')
-} // <--- ¡AQUÍ ESTABA EL ERROR! Faltaba esta llave para cerrar la función
+}
 
 onMounted(() => {
   if (currentUser.value) {
@@ -47,7 +47,6 @@ const cargarDatos = async () => {
 </script>
 
 <template>
-  <!-- Este div contenedor es VITAL para que tu menú y tu editor se pongan lado a lado -->
   <div class="min-h-screen text-zinc-100 flex flex-col lg:flex-row font-sans">
     
     <header class="lg:hidden flex items-center justify-between bg-white p-4 w-full border-b border-zinc-200">
