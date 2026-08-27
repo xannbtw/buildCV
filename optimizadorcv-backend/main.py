@@ -20,10 +20,10 @@ if not api_key:
 # GEMINI
 client = genai.Client(api_key=api_key)
 
-# inicializar app
+# inicializar
 app = FastAPI()
 
-# configuracion CORS para conectar back con front
+# configuracion CORS 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "https://optimizadorcv-frontend-ufxe-theta.vercel.app", "https://buildcv.lat", "https://www.buildcv.lat"],
@@ -40,17 +40,17 @@ class GenerarRequest(BaseModel):
 class DatosPersonales(BaseModel):
     fullName: str
     jobTitle: str
-    email: str       # <--- NUEVO
-    phone: str       # <--- NUEVO
+    email: str      
+    phone: str       
 
 class Experiencia(BaseModel):
     company: str
     position: str
-    date: str        # <--- NUEVO (Ej: "Enero 2023 - Presente")
-    location: str    # <--- NUEVO (Ej: "Remoto" o "Santiago, Chile")
+    date: str 
+    location: str 
     description: str
 
-class Educacion(BaseModel): # <--- NUEVA CLASE
+class Educacion(BaseModel): 
     institution: str
     degree: str
     date: str
