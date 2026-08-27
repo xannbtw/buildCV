@@ -35,10 +35,7 @@ const irALogin = () => {
           
           <div class="flex-shrink-0 flex items-center">
             <a href="#" class="text-2xl font-black tracking-tight text-zinc-900 flex items-center gap-1 group">
-              <span class="w-8 h-8 rounded-xl bg-[#89CFF0]/20 flex items-center justify-center text-[#89CFF0] font-bold text-lg border border-[#89CFF0]/40 group-hover:scale-105 transition-transform">
-                B
-              </span>
-              <span>uild<span class="text-[#89CFF0]">CV</span></span>
+              <span>Build<span class="text-[#89CFF0]">CV</span></span>
             </a>
           </div>
 
@@ -127,10 +124,7 @@ const irALogin = () => {
         </div>
 
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-zinc-950 tracking-tight max-w-4xl mx-auto leading-[1.12]">
-          Deja de enviar el mismo CV a todas las vacantes.
-          <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 via-zinc-700 to-[#89CFF0]">
-            Adáptalo en segundos con IA.
-          </span>
+          Deja de enviar el mismo CV a todas las vacantes. Adáptalo en segundos con IA.
         </h1>
 
         <p class="mt-6 text-lg sm:text-xl text-zinc-600 max-w-2xl mx-auto font-normal leading-relaxed">
