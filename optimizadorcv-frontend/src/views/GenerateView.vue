@@ -10,16 +10,21 @@ const emit = defineEmits<{
 
 const generarconIA = async () => {
   if (!userPrompt.value.trim()) return
+
+  if (!cvData.value.personal?.fullName && (!cvData.value.experience || cvData.value.experience.length === 0)) {
+    alert('Por favor, sube un CV primero antes de usar la IA.')
+    return
+  }
+
   isProcessing.value = true
 
   try {
-    // Llamada HTTP al servidor Python
     const response = await fetch('https://buildcv-production-f12c.up.railway.app/api/generar-cv', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         instruccion: userPrompt.value,
-        cv_base: cvData.value // Enviamos el CV actual como base a la IA
+        cv_base: cvData.value
       })
     })
 
@@ -32,10 +37,9 @@ const generarconIA = async () => {
       return
     }
 
-    // ¡AQUÍ ESTÁ LA CLAVE! Agrega .value a todos
     cvData.value.personal = datosNuevos.personal
     cvData.value.experience = datosNuevos.experience
-    cvData.value.education = datosNuevos.education || [] // Respaldo por si viene vacío
+    cvData.value.education = datosNuevos.education || []
     
     emit('generated')
   } catch (error) {

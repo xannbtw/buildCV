@@ -58,43 +58,31 @@ class Educacion(BaseModel):
 class CVRespuesta(BaseModel):
     personal: DatosPersonales
     experience: List[Experiencia]
-    education: List[Educacion]  # <--- AGREGAR A LA RESPUESTA FINAL
+    education: List[Educacion]
 
 # endpoints 
 @app.post("/api/generar-cv")
 async def generar_cv(datos: GenerarRequest):
-    print("CV generado")
-
+    print(f"Instrucción: {datos.instruccion}") 
+    
     prompt = f"""
-    Eres un experto en Recursos Humanos. A continuación te proporciono el currículum REAL de un candidato en formato JSON:
+    Eres un experto en Recursos Humanos. A continuación tienes el currículum REAL de un candidato en formato JSON:
     
-    {json.dumps(datos.cv_base)}
+    {json.dumps(datos.cv_base, ensure_ascii=False)}
     
-    El candidato postula a una oferta con esta instrucción: "{datos.instruccion}".
+    El candidato postula a la siguiente oferta: "{datos.instruccion}".
     
-    Tu tarea es ADAPTAR las descripciones de su experiencia y su título profesional para destacar lo más relevante para esta oferta.
-    REGLA ESTRICTA: NO inventes empresas, cargos ni experiencia que no existan en el JSON base. Solo mejora la redacción y resalta los logros pertinentes.
+    TU MISIÓN:
+    Devuelve un objeto JSON con la MISMA estructura exacta, pero aplicando estas 2 únicas mejoras:
+    1. Modifica el campo 'jobTitle' en 'personal' para que haga match perfecto con la oferta.
+    2. Mejora la redacción del campo 'description' en 'experience' para destacar las habilidades útiles para este puesto, basándote solo en su experiencia real.
     
-    DEBES responder ÚNICA y EXCLUSIVAMENTE con un objeto JSON válido, manteniendo esta estructura:
-    {{
-      "personal": {{
-        "fullName": "Mantén el nombre real",
-        "jobTitle": "Adapta el cargo",
-        "email": "Mantén el correo",
-        "phone": "Mantén el teléfono"
-      }},
-      "experience": [
-        {{
-          "company": "Mantén la empresa real",
-          "position": "Mantén el cargo real",
-          "date": "Mantén la fecha real",
-          "location": "Mantén la ubicación real",
-          "description": "Redacción adaptada a la oferta, sin inventar hechos."
-        }}
-      ],
-      "education": "Devuelve exactamente el mismo arreglo de education que venía en el cv_base sin modificarlo"
-    }}
+    REGLA DE ORO (ESTRICTA): 
+    Debes COPIAR INTACTOS los valores reales de fullName, email, phone, company, date, location y todo el arreglo de education. NO uses placeholders ni textos de relleno. Si un campo viene vacío, déjalo vacío.
+    
+    Responde ÚNICA y EXCLUSIVAMENTE con el JSON final válido.
     """
+    
     try:
         response = client.models.generate_content(
             model='gemini-3.6-flash',
@@ -107,7 +95,6 @@ async def generar_cv(datos: GenerarRequest):
         texto_limpio = response.text.strip()
         diccionario_cv = json.loads(texto_limpio)
         
-        print("¡CV generado con éxito!")
         return diccionario_cv
         
     except Exception as e:
