@@ -1,0 +1,20 @@
+Términos y Condiciones de Servicio
+Última actualización: 28 de agosto de 2026
+
+1. Descripción del Servicio
+BuildCV es una plataforma de software como servicio (SaaS) que proporciona herramientas basadas en Inteligencia Artificial para estructurar, redactar y optimizar currículums vitae.
+
+2. Uso Aceptable y Responsabilidad
+El usuario es el único responsable de la veracidad, exactitud y legalidad de la información ingresada. Queda estrictamente prohibido utilizar la plataforma para generar historiales laborales falsos, suplantar la identidad de terceros o abusar de los límites de peticiones del servidor.
+
+3. Naturaleza de la Inteligencia Artificial
+Los textos generados por BuildCV son procesados por modelos de lenguaje de Inteligencia Artificial de terceros. Aunque la herramienta está diseñada para optimizar la redacción, el usuario acepta que debe revisar, editar y validar siempre el currículum final antes de descargarlo o enviarlo a un empleador. BuildCV no garantiza entrevistas, contrataciones ni la precisión absoluta de los textos generados.
+
+4. Propiedad y Licencia
+El usuario mantiene todos los derechos de propiedad intelectual sobre los datos personales y el contenido de los currículums que suba a la plataforma. BuildCV no reclama la propiedad de tus documentos profesionales.
+
+5. Limitación de Responsabilidad
+El servicio se proporciona "tal cual". BuildCV no asume responsabilidad por interrupciones del servicio derivadas de fallos en proveedores externos (Supabase, Railway, Vercel), pérdida accidental de datos, o los resultados de procesos de selección laboral en los que el usuario participe utilizando documentos generados en la plataforma.
+
+6. Ley Aplicable
+Estos términos se rigen e interpretan de acuerdo con las leyes de la República de Chile.

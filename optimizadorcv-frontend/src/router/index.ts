@@ -4,11 +4,22 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LandingView from '../views/LandingView.vue'
 import LoginView from '../views/AuthView.vue'
 import DashboardView from '../views/DashboardView.vue'
+import PrivacidadView from '../views/privacidad.vue'
+import ServicioView from '../views/servicio.vue'
 import { supabase } from '../supabase'
 
 
 const router = createRouter({
   history: createWebHistory(),
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    if (to.hash) {
+      return { el: to.hash, behavior: 'smooth' }
+    }
+    return { top: 0, behavior: 'smooth' }
+  },
   routes: [
     {
       path: '/',
@@ -24,6 +35,17 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardView
+    },
+    {
+      path: '/privacidad',
+      name: 'privacidad',
+      component: PrivacidadView
+    },
+    {
+      path: '/servicio',
+      name: 'servicio',
+      component: ServicioView,
+      alias: ['/terminos', '/terminos-servicio']
     }
   ]
 })

@@ -37,3 +37,7 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Google
+#320061439465-j37d4lkauk45tlvmfe1jthv1oqe706o1.apps.googleusercontent.com  # CLIENT_ID
+#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  # CLIENT_SECRET

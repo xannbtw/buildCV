@@ -1,0 +1,22 @@
+Política de Privacidad
+Última actualización: 28 de agosto de 2026
+
+1. Información que recopilamos
+Para operar nuestro servicio de optimización, recopilamos los siguientes datos:
+* Datos de Cuenta: Dirección de correo electrónico, nombre y fotografía de perfil (obtenidos mediante el registro manual o a través del inicio de sesión con Google OAuth).
+* Datos del Currículum: Historial laboral, formación académica, datos de contacto y cualquier texto proporcionado dentro de los documentos PDF subidos o ingresados manualmente en nuestro editor.
+
+2. Uso de la información
+Utilizamos tus datos personales exclusivamente para:
+* Proveer, mantener y mejorar el servicio de optimización de CVs.
+* Autenticar tu acceso seguro a la plataforma y mantener tu sesión activa.
+* Procesar tus textos mediante Inteligencia Artificial para generar versiones adaptadas a ofertas laborales específicas.
+
+3. Terceros y Procesamiento de Datos
+Para que la plataforma funcione, compartimos datos estrictamente necesarios con los siguientes proveedores de infraestructura:
+* Google Cloud (API de Gemini): Utilizamos esta API para procesar y optimizar los textos de tu currículum. Google no utiliza los datos enviados a través de su API para entrenar sus modelos de IA públicos.
+* Supabase: Gestiona nuestra base de datos y la autenticación cifrada de usuarios.
+* Vercel y Railway: Proveen el alojamiento de nuestra plataforma web y los servidores de procesamiento.
+
+4. Tus Derechos
+De acuerdo con la legislación de protección de datos de Chile (Ley 19.628), tienes derecho a acceder, rectificar, cancelar u oponerte al tratamiento de tus datos personales. Puedes eliminar tu cuenta y todos los currículums asociados de forma permanente directamente desde la configuración de tu cuenta en la plataforma.

@@ -39,12 +39,12 @@ const irALogin = () => {
             </a>
           </div>
 
-          <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 bg-zinc-100/80 px-4 py-1.5 rounded-full border border-zinc-200/60">
+          <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
             <a 
               v-for="item in navItems" 
               :key="item.name" 
               :href="item.href" 
-              class="text-xs lg:text-sm font-medium text-zinc-600 hover:text-zinc-950 px-3 py-1 rounded-full hover:bg-white transition-all duration-150"
+              class="text-xs lg:text-sm font-medium text-zinc-600 hover:text-zinc-950 px-3 py-1 rounded-full"
             >
               {{ item.name }}
             </a>
@@ -899,27 +899,90 @@ const irALogin = () => {
       </div>
     </section>
 
-    <footer class="bg-white border-t border-zinc-200 py-12">
+    <footer class="bg-white border-t border-zinc-200 pt-16 pb-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div class="flex items-center gap-2">
-            <span class="w-7 h-7 rounded-lg bg-[#89CFF0]/20 flex items-center justify-center text-[#89CFF0] font-bold text-sm border border-[#89CFF0]/40">
-              B
-            </span>
-            <span class="text-xl font-black text-zinc-900 tracking-tight">Build<span class="text-[#89CFF0]">CV</span></span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-zinc-100">
+          
+          <!-- Column 1: Brand info -->
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-[#89CFF0]/20 flex items-center justify-center text-[#89CFF0] font-bold text-base border border-[#89CFF0]/40">
+                B
+              </span>
+              <span class="text-2xl font-black text-zinc-900 tracking-tight">Build<span class="text-[#89CFF0]">CV</span></span>
+            </div>
+            <p class="text-sm text-zinc-500 max-w-sm leading-relaxed">
+              Plataforma inteligente diseñada para estructurar, redactar y optimizar currículums de alto impacto que superan los filtros ATS y destacan ante los reclutadores.
+            </p>
           </div>
 
-          <div class="flex flex-wrap justify-center gap-6 text-sm text-zinc-600">
-            <a href="#problema" class="hover:text-zinc-950 transition-colors">El Problema</a>
-            <a href="#beneficios" class="hover:text-zinc-950 transition-colors">Beneficios</a>
-            <a href="#como-funciona" class="hover:text-zinc-950 transition-colors">Cómo Funciona</a>
-            <a href="#plantillas" class="hover:text-zinc-950 transition-colors">Plantillas</a>
-            <a href="#faq" class="hover:text-zinc-950 transition-colors">FAQ</a>
-            <button @click="irALogin" class="hover:text-zinc-950 transition-colors font-medium">Acceso Usuario</button>
+          <!-- Column 2: Producto -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-900 mb-4">Producto</h4>
+            <ul class="space-y-2.5 text-sm text-zinc-600">
+              <li><a href="#problema" class="hover:text-zinc-950 transition-colors">El Problema</a></li>
+              <li><a href="#beneficios" class="hover:text-zinc-950 transition-colors">Beneficios</a></li>
+              <li><a href="#como-funciona" class="hover:text-zinc-950 transition-colors">Cómo Funciona</a></li>
+              <li><a href="#plantillas" class="hover:text-zinc-950 transition-colors">Plantillas ATS</a></li>
+              <li><a href="#faq" class="hover:text-zinc-950 transition-colors">Preguntas Frecuentes</a></li>
+            </ul>
           </div>
 
-          <div class="text-xs text-zinc-400">
+          <!-- Column 3: Legal & Seguridad -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-900 mb-4">Legal & Transparencia</h4>
+            <ul class="space-y-2.5 text-sm">
+              <li>
+                <router-link 
+                  to="/privacidad" 
+                  class="text-zinc-600 hover:text-zinc-950 hover:font-medium transition-colors flex items-center gap-1.5 group"
+                >
+                  <span>Política de Privacidad</span>
+                  <span class="text-3xs px-1.5 py-0.5 rounded-md bg-[#89CFF0]/20 text-[#89CFF0] font-bold group-hover:bg-[#89CFF0]/30 transition-colors">Oficial</span>
+                </router-link>
+              </li>
+              <li>
+                <router-link 
+                  to="/servicio" 
+                  class="text-zinc-600 hover:text-zinc-950 hover:font-medium transition-colors flex items-center gap-1.5 group"
+                >
+                  <span>Términos de Servicio</span>
+                  <span class="text-3xs px-1.5 py-0.5 rounded-md bg-zinc-100 text-zinc-500 font-bold group-hover:bg-zinc-200 transition-colors">Legal</span>
+                </router-link>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Cuenta -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-900 mb-4">Acceso</h4>
+            <ul class="space-y-2.5 text-sm text-zinc-600">
+              <li>
+                <button @click="irALogin" class="text-zinc-600 hover:text-zinc-950 transition-colors text-left">
+                  Iniciar Sesión
+                </button>
+              </li>
+              <li>
+                <button @click="irALogin" class="text-[#89CFF0] hover:text-[#78bee0] font-semibold transition-colors text-left">
+                  Crear Cuenta Gratis →
+                </button>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+          <div>
             &copy; {{ new Date().getFullYear() }} BuildCV. Todos los derechos reservados.
+          </div>
+          <div class="flex items-center gap-6">
+            <router-link to="/privacidad" class="hover:text-zinc-800 transition-colors">Privacidad</router-link>
+            <span class="text-zinc-300">·</span>
+            <router-link to="/servicio" class="hover:text-zinc-800 transition-colors">Términos</router-link>
+            <span class="text-zinc-300">·</span>
+            <a href="#" class="hover:text-zinc-800 transition-colors">Volver arriba ↑</a>
           </div>
         </div>
       </div>
