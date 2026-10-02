@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { supabase } from '../supabase'
-import { savedCVs, cvData, currentCvId, isProcessing, currentUser } from '../store'
-import html2pdf from 'html2pdf.js'
+import { savedCVs, cvData, currentCvId, isProcessing, currentUser, plantillaActual } from '../store'
+import JakeTemplate from '../components/templates/jake.vue'
 
 const emit = defineEmits<{
   (e: 'saved'): void
@@ -22,7 +22,6 @@ const emit = defineEmits<{
 
   try {
     if (indiceExistente !== -1) {
-      // EL NOMBRE YA EXISTE
       if (savedCVs.value[indiceExistente].id !== currentCvId.value) {
         const confirmar = confirm(
           `Ya existe un CV llamado "${nombrePersonalizado}". ¿Estás seguro de que deseas sobreescribirlo?`
@@ -32,7 +31,6 @@ const emit = defineEmits<{
 
       const idActualizar = savedCVs.value[indiceExistente].id
 
-      // 1. ACTUALIZAR EN SUPABASE (.update)
       const { error } = await supabase
         .from('cv_guardados')
         .update({
@@ -45,23 +43,19 @@ const emit = defineEmits<{
 
       if (error) throw error
 
-      // Actualizar en pantalla
       savedCVs.value[indiceExistente].data = JSON.parse(JSON.stringify(cvData.value))
       savedCVs.value[indiceExistente].date = new Date().toLocaleDateString()
       currentCvId.value = idActualizar
       } else {
-      // EL NOMBRE ES NUEVO
-      let guardarComoCopia = true; // Por defecto asumimos que quiere crear uno nuevo
+      let guardarComoCopia = true;
 
       if (currentCvId.value) {
-        // Si tenía un CV abierto, le damos a elegir
         guardarComoCopia = confirm(
           'Has escrito un nombre diferente. ¿Quieres guardar esto como un nuevo currículum (una copia)?\n\n[Aceptar] = Crear nuevo CV\n[Cancelar] = Solo renombrar el actual'
         );
       }
 
       if (currentCvId.value && !guardarComoCopia) {
-        // OPCIÓN A: El usuario canceló, solo quiere RENOMBRAR
         const { error } = await supabase
           .from('cv_guardados')
           .update({
@@ -81,7 +75,6 @@ const emit = defineEmits<{
           savedCVs.value[indiceActual].date = new Date().toLocaleDateString()
         }
       } else {
-        // OPCIÓN B: INSERTAR UNO COMPLETAMENTE NUEVO (Guardar como copia)
         const { data, error } = await supabase
           .from('cv_guardados')
           .insert([
@@ -104,7 +97,7 @@ const emit = defineEmits<{
           data: cvInsertado.datos_json
         }
         savedCVs.value.push(nuevoCV)
-        currentCvId.value = nuevoCV.id // Ahora editamos el nuevo
+        currentCvId.value = nuevoCV.id
       }
     }
 
@@ -120,11 +113,11 @@ const emit = defineEmits<{
 const agregarExperiencia = () => {
   if (!cvData.value.experience) cvData.value.experience = []
   cvData.value.experience.push({
-    position: 'Nuevo Cargo',
-    company: 'Nueva Empresa',
-    date: 'Fecha de Inicio - Fecha Fin',
-    location: 'Ciudad',
-    description: 'Descripción de responsabilidades y logros.'
+    position: '',
+    company: '',
+    date: '',
+    location: '',
+    description: ''
   })
 }
 
@@ -137,9 +130,9 @@ const eliminarExperiencia = (index: number) => {
 const agregarEducacion = () => {
   if (!cvData.value.education) cvData.value.education = []
   cvData.value.education.push({
-    institution: 'Nueva Institución',
-    degree: 'Título Obtenido',
-    date: 'Fecha de Inicio - Fecha de Fin'
+    institution: '',
+    degree: '',
+    date: ''
   })
 }
 
@@ -150,26 +143,69 @@ const eliminarEducacion = (index: number) => {
 }
 
 const descargarPDF = () => {
-  const elemento = document.getElementById('cv-preview') as HTMLElement
-  const opciones: any = {
-    margin: 0,
-    filename: `${cvData.value.personal.fullName || 'CV'}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2, useCORS: true, scrollY: 0, scrollX: 0 },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  const elementoCV = document.getElementById('cv-preview')
+  if (!elementoCV) return
+
+  const iframe = document.createElement('iframe')
+  iframe.style.display = 'none'
+  document.body.appendChild(iframe)
+
+  const estilos = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
+    .map(etiqueta => etiqueta.outerHTML)
+    .join('\n')
+
+  const iframeDoc = iframe.contentWindow?.document
+  if (iframeDoc) {
+    iframeDoc.open()
+    iframeDoc.write(`
+      <html>
+        <head>
+          <title>${cvData.value.personal?.fullName || 'CV'}</title>
+          ${estilos}
+          <style>
+            @page { margin: 0; size: A4; }
+            body { 
+              margin: 0; 
+              padding: 0; 
+              background: white; 
+              -webkit-print-color-adjust: exact; 
+              print-color-adjust: exact; 
+            }
+            #cv-preview { 
+              transform: scale(1) !important; 
+              box-shadow: none !important; 
+              width: 210mm !important; 
+              min-height: 297mm !important;
+              margin: 0 !important;
+              padding: 20mm 20mm !important; 
+              box-sizing: border-box !important; 
+            }
+          </style>
+        </head>
+        <body>
+          ${elementoCV.outerHTML}
+        </body>
+      </html>
+    `)
+    iframeDoc.close()
+
+    setTimeout(() => {
+      iframe.contentWindow?.focus()
+      iframe.contentWindow?.print()
+      
+      setTimeout(() => document.body.removeChild(iframe), 1000)
+    }, 500)
   }
-  html2pdf().set(opciones).from(elemento).save()
 }
 
 </script>
 
 <template>
-  <div>
-    <header class="mb-6 flex justify-between items-center">
-      <div>
-        <h2 class="text-2xl font-semibold text-zinc-900">Revisa tu CV</h2>
-      </div>
-      <div class="flex gap-3">
+  <header class="mb-6 flex justify-between items-center">
+    <div>
+      <h2 class="text-2xl font-semibold text-zinc-900">Revisa tu CV</h2>
+    </div>
+    <div class="flex gap-3">
         <button
           @click="guardarCV"
           class="bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700 px-6 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors"
@@ -204,6 +240,10 @@ const descargarPDF = () => {
           <div>
             <label class="text-xs text-zinc-600">Telefono</label>
             <input v-model="cvData.personal.phone" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
+          </div>
+          <div>
+            <label class="text-xs text-zinc-600">Resumen Profesional</label>
+            <input v-model="cvData.personal.summary" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
           </div>
         </div>
         <div class="mb-6">
@@ -256,64 +296,14 @@ const descargarPDF = () => {
 
       </div>
 
-      <!-- VISTA PREVIA -->
-      <div class="w-full max-w-[21cm] h-full max-h-[85vh] overflow-y-auto shadow-2xl mx-auto">
-        <div id="cv-preview" class="bg-[#ffffff] w-full max-w-[21cm] aspect-[1/1.414] shadow-2xl p-10 text-[#000000] font-sans overflow-y-auto">
-          
-          <!-- Cabecera Dinámica -->
-          <header class="text-center mb-6">
-            <h1 class="text-4xl font-bold text-[#111827] mb-1 tracking-tight">{{ cvData.personal?.fullName || 'Tu Nombre' }}</h1>
-            <p class="text-sm text-[#4b5563]">
-              {{ cvData.personal?.jobTitle || 'Título Profesional' }}
-              <span v-if="cvData.personal?.email" class="mx-2">|</span> 
-              {{ cvData.personal?.email || '' }}
-              <span v-if="cvData.personal?.phone" class="mx-2">|</span> 
-              {{ cvData.personal?.phone || '' }}
-            </p>
-          </header>
+      <div class="w-full max-w-[21cm] h-full max-h-[85vh] overflow-y-auto shadow-2xl mx-auto">          
+        <div class="w-full origin-top scale-[0.85] md:scale-100">
 
-          <!-- Sección: Experiencia Dinámica -->
-          <section class="mb-6">
-            <h2 class="text-xs font-bold text-[#111827] uppercase tracking-widest border-b-[1.5px] border-[#111827] pb-1 mb-3">
-              Experiencia Laboral
-            </h2>
-            
-            <div v-for="(job, index) in cvData.experience" :key="index" class="mb-4">
-              <!-- Empresa y Fechas Reales -->
-              <div class="flex justify-between items-baseline">
-                <h3 class="text-sm font-bold text-[#111827]">{{ job.company || 'Nombre de la Empresa' }}</h3>
-                <span class="text-xs text-[#4b5563] font-medium">{{ job.date || 'Fecha no especificada' }}</span>
-              </div>
-              
-              <!-- Cargo y Ubicación Reales -->
-              <div class="flex justify-between items-baseline mb-1">
-                <p class="text-sm italic text-[#1f2937]">{{ job.position || 'Tu Cargo' }}</p>
-                <span class="text-xs text-[#4b5563]">{{ job.location || '' }}</span>
-              </div>
-              
-              <div class="text-sm text-[#374151] leading-relaxed mt-1 pl-4 relative">
-                <span class="absolute left-0 top-[6px] w-1.5 h-1.5 bg-[#6b7280] rounded-full"></span>
-                {{ job.description }}
-              </div>
-            </div>
-          </section>
-
-          <!-- Sección: Educación Dinámica (Solo se muestra si hay datos) -->
-          <section v-if="cvData.education && cvData.education.length > 0" class="mb-6">
-            <h2 class="text-xs font-bold text-[#111827] uppercase tracking-widest border-b-[1.5px] border-[#111827] pb-1 mb-3">
-              Educación
-            </h2>
-            <div v-for="(edu, index) in cvData.education" :key="index" class="mb-3">
-              <div class="flex justify-between items-baseline">
-                <h3 class="text-sm font-bold text-[#111827]">{{ edu.institution || 'Institución' }}</h3>
-                <span class="text-xs text-[#4b5563] font-medium">{{ edu.date || '' }}</span>
-              </div>
-              <p class="text-sm italic text-[#1f2937]">{{ edu.degree || 'Título obtenido' }}</p>
-            </div>
-          </section>
+          <div id="cv-preview" class="bg-white">
+            <JakeTemplate v-if="plantillaActual === 'jake' || plantillaActual === 'clasica'" />
+          </div>
 
         </div>
       </div>
     </div>
-  </div>
 </template>

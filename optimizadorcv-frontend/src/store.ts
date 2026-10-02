@@ -1,7 +1,6 @@
 // src/store.ts
 import { ref, reactive } from 'vue'
 
-// Estado global de la aplicación
 export const isProcessing = ref(false)
 export const savedCVs = ref<any[]>([])
 export const currentCvId = ref<number | null>(null)
@@ -11,19 +10,20 @@ export const cvData = ref({
   personal: {
     fullName: '',
     jobTitle: '',
-    email: '',    // <--- NUEVO
-    phone: ''     // <--- NUEVO
+    email: '',
+    phone: '',
+    summary: ''
   },
   experience: [
     {
       company: '',
       position: '',
-      date: '',       // <--- NUEVO
-      location: '',   // <--- NUEVO
+      date: '',
+      location: '',
       description: ''
     }
   ],
-  education: [        // <--- NUEVO BLOQUE COMPLETO
+  education: [
     {
       institution: '',
       degree: '',
@@ -31,3 +31,5 @@ export const cvData = ref({
     }
   ]
 })
+
+export const plantillaActual = ref('jake')

@@ -47,7 +47,7 @@ const processCV = async () => {
     const datosNuevos = await response.json()
     
     if (datosNuevos.error) {
-      alert("La Inteligencia Artificial dice: " + datosNuevos.error)
+      alert("La IA dice: " + datosNuevos.error)
       return
     }
 
@@ -66,7 +66,7 @@ const processCV = async () => {
 
 const iniciarCVEnBlanco = () => {
   cvData.value = {
-    personal: { fullName: '', jobTitle: '', email: '', phone: '' },
+    personal: { fullName: '', jobTitle: '', email: '', phone: '', summary: '' },
     experience: [],
     education: []
   }

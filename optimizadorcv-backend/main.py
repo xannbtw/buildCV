@@ -129,7 +129,8 @@ async def procesar_pdf(file: UploadFile = File(...)):
               "fullName": "Extraer nombre",
               "jobTitle": "Extraer o deducir el cargo principal",
               "email": "Extraer correo",
-              "phone": "Extraer teléfono"
+              "phone": "Extraer teléfono",
+              "summary": "Resumen Profesional extraido de la experiencia laboral"
             }},
             "experience": [
               {{
