@@ -27,18 +27,36 @@ onMounted(async () => {
 })
 
 const cargarCVGuardado = (cvGuardado: any) => {
-  // Sacamos los datos de cvGuardado.data
   cvData.value.personal = cvGuardado.data.personal
   cvData.value.experience = cvGuardado.data.experience
   cvData.value.education = cvGuardado.data.education || []
   
-  // Guardamos el ID para saber cuál estamos editando
   currentCvId.value = cvGuardado.id
   
-  // Emitimos el evento correcto
   emit('select-cv', cvGuardado)
 }
 
+
+const eliminarCV = async (id: number) => {
+  const confirmar = window.confirm('¿Estás seguro de eliminar este CV?')
+  if (!confirmar) return
+  try {
+    const { error } = await supabase
+      .from('cv_guardados')
+      .delete()
+      .eq('id', id)
+
+    if (!error) {
+      savedCVs.value = savedCVs.value.filter(cv => cv.id !== id)
+    }
+
+    if (id === currentCvId.value) {
+      currentCvId.value = null
+    }
+  } catch (error) {
+    console.error('Error al eliminar el CV:', error)
+  }
+}
 
 </script>
 
@@ -89,6 +107,12 @@ const cargarCVGuardado = (cvGuardado: any) => {
             Guardado el: {{ cv.date }}
           </p>
         </div>
+
+        <button @click.stop="eliminarCV(cv.id)" class="absolute top-3 right-3" title="Eliminar CV">
+          <svg class="w-5 h-5 text-zinc-500 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
       </article>
     </div>
   </div>
