@@ -75,5 +75,21 @@ import { cvData } from '../../store'
       </div>
     </section>
 
+    <section class="mb-6">
+      <h2 class="text-lg font-bold border-b-2 border-black uppercase mb-3 pb-1">Habilidades</h2>
+
+      <div v-if="!cvData.skills || cvData.skills.length === 0" class="text-gray-400 italic">
+        Añade tus habilidades en el panel izquierdo.
+      </div>
+
+      <div v-for="(skill, index) in cvData.skills" :key="index" class="mb-3">
+        <div class="flex justify-between items-baseline mb-1">
+          <div>
+            <span class="font-bold text-base">{{ skill.name || 'Habilidad' }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>

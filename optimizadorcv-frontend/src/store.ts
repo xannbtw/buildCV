@@ -29,7 +29,10 @@ export const cvData = ref({
       degree: '',
       date: ''
     }
-  ]
+  ],
+  skills: [] as {
+    name: string
+  }[]
 })
 
 export const plantillaActual = ref('jake')

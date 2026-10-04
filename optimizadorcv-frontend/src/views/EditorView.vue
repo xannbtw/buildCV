@@ -127,12 +127,25 @@ const eliminarExperiencia = (index: number) => {
   }
 }
 
+const eliminarSkill = (index: number) => {
+  if (cvData.value.skills) {
+    cvData.value.skills.splice(index, 1)
+  }
+}
+
 const agregarEducacion = () => {
   if (!cvData.value.education) cvData.value.education = []
   cvData.value.education.push({
     institution: '',
     degree: '',
     date: ''
+  })
+}
+
+const agregarSkill = () => {
+  if (!cvData.value.skills) cvData.value.skills = []
+  cvData.value.skills.push({
+    name: ''
   })
 }
 
@@ -289,6 +302,24 @@ const descargarPDF = () => {
               
               <div class="grid grid-cols-2 gap-2 mb-2">
                 <input v-model="job.date" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Ej: Ene 2023 - Presente" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm text-zinc-600">Habilidades</h3>
+            <button @click="agregarSkill" class="text-xs bg-zinc-200 hover:bg-zinc-200 text-zinc-600 px-2 py-1 rounded transition-colors">+ Añadir habilidad</button>
+          </div>
+          
+          <div class="flex flex-col gap-4">
+            <div v-for="(skill, index) in cvData.skills" :key="index" class="bg-zinc-200 p-3 rounded-lg border border-gray-800 relative">
+              
+              <button @click="eliminarSkill(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-400 text-xs font-bold">✕</button>
+              
+              <div class="grid grid-cols-2 gap-2 mb-2 pr-4">
+                <input v-model="skill.name" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Habilidad" />
               </div>
             </div>
           </div>

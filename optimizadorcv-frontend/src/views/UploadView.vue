@@ -46,6 +46,8 @@ const processCV = async () => {
 
     const datosNuevos = await response.json()
     
+    console.log("Datos del backend:", datosNuevos)
+
     if (datosNuevos.error) {
       alert(datosNuevos.error)
       return
@@ -54,6 +56,7 @@ const processCV = async () => {
     cvData.value.personal = datosNuevos.personal
     cvData.value.experience = datosNuevos.experience
     cvData.value.education = datosNuevos.education || []
+    cvData.value.skills = datosNuevos.skills || []
     
     emit('processed')
   } catch (error) {
@@ -68,7 +71,8 @@ const iniciarCVEnBlanco = () => {
   cvData.value = {
     personal: { fullName: '', jobTitle: '', email: '', phone: '', summary: '' },
     experience: [],
-    education: []
+    education: [],
+    skills: []
   }
   emit('processed')
 }

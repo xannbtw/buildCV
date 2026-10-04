@@ -30,6 +30,7 @@ const cargarCVGuardado = (cvGuardado: any) => {
   cvData.value.personal = cvGuardado.data.personal
   cvData.value.experience = cvGuardado.data.experience
   cvData.value.education = cvGuardado.data.education || []
+  cvData.value.skills = cvGuardado.data.skills || []
   
   currentCvId.value = cvGuardado.id
   

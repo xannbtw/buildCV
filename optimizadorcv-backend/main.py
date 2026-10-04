@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel 
+from pydantic import BaseModel, Field
 import os
 import json
 import io
@@ -42,7 +42,8 @@ class DatosPersonales(BaseModel):
     fullName: str
     jobTitle: str
     email: str      
-    phone: str       
+    phone: str
+    summary: str
 
 class Experiencia(BaseModel):
     company: str
@@ -56,10 +57,14 @@ class Educacion(BaseModel):
     degree: str
     date: str
 
+class habiliades(BaseModel):
+    name: str = Field(description="Nombre de la habilidad técnica o blanda deducida del texto (ej: Excel, Liderazgo, Python). OBLIGATORIO extraer al menos 3.")
+    
 class CVRespuesta(BaseModel):
     personal: DatosPersonales
     experience: List[Experiencia]
     education: List[Educacion]
+    skills: List[habiliades]
 
 # endpoints 
 @app.post("/api/generar-cv")
@@ -82,6 +87,7 @@ async def generar_cv(datos: GenerarRequest):
     Debes COPIAR INTACTOS los valores reales de fullName, email, phone, company, date, location y todo el arreglo de education. NO uses placeholders ni textos de relleno. Si un campo viene vacío, déjalo vacío.
     REGLA CRÍTICA: Si las instrucciones del usuario mencionan una experiencia laboral actual o nueva que NO estaba en el texto del currículum original, tienes estrictamente PERMITIDO y OBLIGADO extraer esos datos, redactarlos de forma profesional y agregarlos como un bloque nuevo dentro del arreglo 'experience'.
     Responde ÚNICA y EXCLUSIVAMENTE con el JSON final válido.
+    REGLA DE HABILIDADES: El JSON de salida DEBE incluir el arreglo "skills" con la estructura [{{"name": "habilidad"}}]. Incluye TODAS las habilidades originales del CV y añade cualquier habilidad técnica nueva que el usuario mencione en sus instrucciones. Limitate a 5 habilidades (las mas relevantes para la oferta de empleo).    
     """
     
     max_reintentos = 4
@@ -92,6 +98,7 @@ async def generar_cv(datos: GenerarRequest):
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
+                    response_schema=CVRespuesta,
                 ),
             )
             texto_limpio = response.text.strip()
@@ -131,8 +138,11 @@ async def procesar_pdf(file: UploadFile = File(...)):
           
           TEXTO DEL CV:
           {texto_completo}
+
+          REGLA CRÍTICA PARA HABILIDADES: Debes buscar, identificar y extraer TODAS las habilidades (técnicas, blandas, software, herramientas, idiomas) mencionadas en el texto. Si el candidato no tiene una sección explícita de "Habilidades", 
+          OBLIGATORIAMENTE debes deducirlas leyendo sus tareas en la experiencia laboral. El arreglo 'skills' SIEMPRE debe contener datos.
           
-          Usa exactamente esta estructura:
+          Usa EXACTAMENTE esta estructura JSON. ESTÁ ESTRICTAMENTE PROHIBIDO omitir la llave "skills". Incluso si crees que el candidato no tiene habilidades, DEBES incluir "skills" en el JSON final (aunque sea con un arreglo vacío []). Limitate a 5 habilidades (selecciona las mas relevantes):
           {{
             "personal": {{
               "fullName": "Extraer nombre",
@@ -156,6 +166,11 @@ async def procesar_pdf(file: UploadFile = File(...)):
                 "degree": "Título obtenido o carrera",
                 "date": "Fecha de estudio"
               }}
+            ],
+            "skills": [
+              {{
+                "name": "Nombre de la habilidad (ej. Trabajo en equipo, Comunicación efectiva, etc)"
+              }}
             ]
           }}
           """
@@ -168,6 +183,7 @@ async def procesar_pdf(file: UploadFile = File(...)):
                     contents=prompt,
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json",
+                        response_schema=CVRespuesta,
                     ),
                 )
                 texto_limpio = response.text.strip()
