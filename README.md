@@ -1,6 +1,6 @@
 # 🚀 BuildCV
 
-BuildCV es una plataforma SaaS diseñada para revolucionar la creación y adaptación de currículums vitae utilizando Inteligencia Artificial. La aplicación extrae la información de un CV base, la procesa a través de AI y genera versiones altamente optimizadas enfocadas en los requerimientos específicos de cualquier oferta laboral.
+BuildCV es una aplicación web diseñada para revolucionar la creación y adaptación de currículums vitae utilizando Inteligencia Artificial. La aplicación extrae la información de un CV base, la procesa a través de IA y genera versiones altamente optimizadas enfocadas en los requerimientos específicos de cualquier oferta laboral.
 
 Con un enfoque en la usabilidad, la plataforma ofrece un editor visual dinámico donde el usuario tiene el control total de su información antes de generar el documento final listo para postular.
 
