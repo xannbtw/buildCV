@@ -14,7 +14,15 @@ Con un enfoque en la usabilidad, la plataforma ofrece un editor visual dinámico
 
 ## 🛠️ Stack Tecnológico
 
-- **Frontend:** Vue 3 (Composition API), TypeScript, Tailwind CSS, `html2pdf.js`.
+- **Frontend:** Vue 3, TypeScript, Tailwind CSS.
 - **Backend:** Python 3, FastAPI, Google GenAI SDK, PyPDF.
 - **Base de Datos y Auth:** Supabase (PostgreSQL).
-- **Infraestructura de Despliegue:** Frontend alojado en Vercel y API Backend orquestada en Railway.
+- **Infraestructura de Despliegue:** Frontend alojado en Vercel y API Backend orquestada en Render.
+
+## 🛠️ Herramientas de Productividad y Desarrollo
+
+Durante la construccion de este proyecto, utilicé herramientas de Inteligencia Artificial como asistente de programacion y pair programming. Esto me permitio:
+
+- Iterar rapidamente en la estructura de componentes con Vue.js.
+- Depurar y resolver configuracion de infraestructura.
+- Optimizar la lógica del backend en FastApi y el manejo de excepciones
