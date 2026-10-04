@@ -193,6 +193,6 @@ async def procesar_pdf(file: UploadFile = File(...)):
         print(f"Error procesando PDF: {e}")
         return {"error": "No se pudo procesar el documento."}
 
-@app.get("/ping")
+@app.api_route("/ping", methods=["GET", "HEAD"])
 def ping():
     return {"status": "ok", "mensaje": "servidor activo"}
