@@ -21,7 +21,7 @@ const generarconIA = async () => {
   isProcessing.value = true
 
   try {
-    const response = await fetch('https://buildcv-production-f12c.up.railway.app/api/generar-cv', {
+    const response = await fetch('https://buildcv-ww77.onrender.com/api/generar-cv', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -46,7 +46,7 @@ const generarconIA = async () => {
     emit('generated')
   } catch (error) {
     console.error('Error de conexión:', error)
-    alert('No se pudo conectar con el servidor. ¿Revisaste que FastAPI esté corriendo en el puerto 8000?')
+    alert('No se pudo conectar con el servidor.')
   } finally {
     isProcessing.value = false
   }

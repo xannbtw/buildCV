@@ -38,7 +38,7 @@ const processCV = async () => {
   formData.append('file', uploadedFile.value)
 
   try {
-    const response = await fetch('https://buildcv-production-f12c.up.railway.app/api/procesar-pdf', {
+    const response = await fetch('https://buildcv-ww77.onrender.com/api/procesar-pdf', {
       method: 'POST',
       body: formData
     })
@@ -47,7 +47,7 @@ const processCV = async () => {
     const datosNuevos = await response.json()
     
     if (datosNuevos.error) {
-      alert("La IA dice: " + datosNuevos.error)
+      alert(datosNuevos.error)
       return
     }
 

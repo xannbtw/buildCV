@@ -8,7 +8,7 @@ import { cvData } from '../../store'
     
     <header class="text-center mb-6">
       <h1 class="text-4xl font-bold mb-1">{{ cvData.personal?.fullName || 'Tu Nombre' }}</h1>
-      <div class="flex justify-center items-center gap-2 text-sm mt-2">
+      <div class="flex flex-wrap justify-center items-center gap-2 text-sm mt-2">
         <span v-if="cvData.personal?.phone">{{cvData.personal?.phone}}</span>
         <span v-if="cvData.personal?.jobTitle">| {{ cvData.personal.jobTitle }} |</span>
         <span v-if="cvData.personal?.email">{{ cvData.personal.email }}</span>
@@ -36,12 +36,14 @@ import { cvData } from '../../store'
       </div>
 
       <div v-for="(exp, index) in cvData.experience" :key="index" class="mb-4">
-        <div class="flex justify-between items-baseline mb-1">
+        <div class="flex justify-between items-start gap-4 mb-1">
           <div>
-            <span class="font-bold text-base">{{ exp.company || 'Empresa' }}</span>
-            <span class="italic"> — {{ exp.position || 'Cargo' }}</span>
+            <div class="flex-1">
+              <span class="font-bold text-base">{{ exp.company || 'Empresa' }}</span>
+              <span class="italic"> — {{ exp.position || 'Cargo' }}</span>
+            </div>
           </div>
-          <div class="text-right text-sm">
+          <div class="text-right text-sm shrink-0 whitespace-nowrap">
             <span v-if="exp.location">{{ exp.location }}</span>
             <span v-if="exp.location && exp.date"> | </span>
             <span v-if="exp.date">{{ exp.date }}</span>

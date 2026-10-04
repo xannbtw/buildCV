@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import os
 import json
 import io
+import time
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -79,27 +80,35 @@ async def generar_cv(datos: GenerarRequest):
     
     REGLA DE ORO (ESTRICTA): 
     Debes COPIAR INTACTOS los valores reales de fullName, email, phone, company, date, location y todo el arreglo de education. NO uses placeholders ni textos de relleno. Si un campo viene vacío, déjalo vacío.
-    
+    REGLA CRÍTICA: Si las instrucciones del usuario mencionan una experiencia laboral actual o nueva que NO estaba en el texto del currículum original, tienes estrictamente PERMITIDO y OBLIGADO extraer esos datos, redactarlos de forma profesional y agregarlos como un bloque nuevo dentro del arreglo 'experience'.
     Responde ÚNICA y EXCLUSIVAMENTE con el JSON final válido.
     """
     
-    try:
-        response = client.models.generate_content(
-            model='gemini-3.6-flash',
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-            ),
-        )
-        
-        texto_limpio = response.text.strip()
-        diccionario_cv = json.loads(texto_limpio)
-        
-        return diccionario_cv
-        
-    except Exception as e:
-        print(f"Error al procesar con la IA: {e}")
-        return {"error": "Hubo un problema procesando tu CV con IA."}
+    max_reintentos = 4
+    for intento in range(max_reintentos):
+        try:
+            response = client.models.generate_content(
+                model='gemini-3.5-flash-lite',
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                ),
+            )
+            texto_limpio = response.text.strip()
+            diccionario_cv = json.loads(texto_limpio)
+            return diccionario_cv
+            
+            
+        except Exception as e:
+            error_str = str(e)
+            if "503" in error_str and intento < max_reintentos - 1:
+                print(f"Servidor de Google saturado (503). Reintentando en 5 segundos... (Intento {intento + 1}/3)")
+                time.sleep(5)
+            else:
+                print(f"Error al procesar con la IA: {e}")
+                return {"error": "Hubo un problema procesando tu CV con IA."}
+                
+    return {"error": "Los servidores de IA están demasiado ocupados. Intenta en unos minutos."}
 
 
 @app.post("/api/procesar-pdf")
@@ -151,13 +160,31 @@ async def procesar_pdf(file: UploadFile = File(...)):
           }}
           """
         
-        response = client.models.generate_content(
-            model='gemini-3.6-flash',
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-            ),
-        )
+        max_reintentos = 4
+        for intento in range(max_reintentos):
+            try:
+                response = client.models.generate_content(
+                    model='gemini-3.5-flash-lite',
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                    ),
+                )
+                texto_limpio = response.text.strip()
+                diccionario_cv = json.loads(texto_limpio)
+                return diccionario_cv
+            
+            
+            except Exception as e:
+                error_str = str(e)
+                if "503" in error_str and intento < max_reintentos - 1:
+                    print(f"Servidor de Google saturado (503). Reintentando en 5 segundos... (Intento {intento + 1}/3)")
+                    time.sleep(5)
+                else:
+                    print(f"Error al procesar con la IA: {e}")
+                    return {"error": "Hubo un problema procesando tu CV con IA."}
+                
+        return {"error": "Los servidores de IA están demasiado ocupados. Intenta en unos minutos."}
         
         return json.loads(response.text.strip())
 
