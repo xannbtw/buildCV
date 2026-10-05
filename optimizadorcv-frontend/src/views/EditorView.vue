@@ -145,7 +145,8 @@ const agregarEducacion = () => {
 const agregarSkill = () => {
   if (!cvData.value.skills) cvData.value.skills = []
   cvData.value.skills.push({
-    name: ''
+    category: '',
+    details: ''
   })
 }
 
@@ -319,7 +320,8 @@ const descargarPDF = () => {
               <button @click="eliminarSkill(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-400 text-xs font-bold">✕</button>
               
               <div class="grid grid-cols-2 gap-2 mb-2 pr-4">
-                <input v-model="skill.name" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Habilidad" />
+                <input v-model="skill.category" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Ej: Idiomas" />
+                <input v-model="skill.details" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Ej: Ingles, Español..." />
               </div>
             </div>
           </div>

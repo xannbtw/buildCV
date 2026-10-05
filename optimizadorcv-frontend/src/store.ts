@@ -31,7 +31,8 @@ export const cvData = ref({
     }
   ],
   skills: [] as {
-    name: string
+    category: string
+    details: string
   }[]
 })
 

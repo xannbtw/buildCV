@@ -57,9 +57,10 @@ class Educacion(BaseModel):
     degree: str
     date: str
 
-class habiliades(BaseModel):
-    name: str = Field(description="Nombre de la habilidad técnica o blanda deducida del texto (ej: Excel, Liderazgo, Python). OBLIGATORIO extraer al menos 3.")
-    
+class habiliades(BaseModel): 
+    category: str = Field(description="La categoría de las habilidades (ej: Idiomas, Habilidades Técnicas, Herramientas, Habilidades Blandas)")   
+    details: str = Field(description="Las habilidades separadas por comas (ej: Inglés (Bilingüe), Español (Nativo) o Python, Vue, React)")
+
 class CVRespuesta(BaseModel):
     personal: DatosPersonales
     experience: List[Experiencia]
@@ -87,7 +88,7 @@ async def generar_cv(datos: GenerarRequest):
     Debes COPIAR INTACTOS los valores reales de fullName, email, phone, company, date, location y todo el arreglo de education. NO uses placeholders ni textos de relleno. Si un campo viene vacío, déjalo vacío.
     REGLA CRÍTICA: Si las instrucciones del usuario mencionan una experiencia laboral actual o nueva que NO estaba en el texto del currículum original, tienes estrictamente PERMITIDO y OBLIGADO extraer esos datos, redactarlos de forma profesional y agregarlos como un bloque nuevo dentro del arreglo 'experience'.
     Responde ÚNICA y EXCLUSIVAMENTE con el JSON final válido.
-    REGLA DE HABILIDADES: El JSON de salida DEBE incluir el arreglo "skills" con la estructura [{{"name": "habilidad"}}]. Incluye TODAS las habilidades originales del CV y añade cualquier habilidad técnica nueva que el usuario mencione en sus instrucciones. Limitate a 5 habilidades (las mas relevantes para la oferta de empleo).    
+    REGLA DE HABILIDADES: El JSON de salida DEBE incluir el arreglo "skills" con la estructura [{{"category": "La categoría de las habilidades (ej: Idiomas, Habilidades Técnicas, Herramientas, Habilidades Blandas)", "details": "Las habilidades separadas por comas (ej: Inglés (Bilingüe), Español (Nativo) o Python, Vue, React)"}}]. Incluye TODAS las habilidades originales del CV y añade cualquier habilidad técnica nueva que el usuario mencione en sus instrucciones. Limitate a 6-8 habilidades (las mas relevantes para la oferta de empleo).    
     """
     
     max_reintentos = 4
@@ -169,7 +170,8 @@ async def procesar_pdf(file: UploadFile = File(...)):
             ],
             "skills": [
               {{
-                "name": "Nombre de la habilidad (ej. Trabajo en equipo, Comunicación efectiva, etc)"
+                "category": "Categoria de la habilidad (ej. Idiomas, Habilidades Técnicas, Herramientas, Habilidades Blandas)",
+                "details": "Las habilidades separadas por comas (ej: Inglés (Bilingüe), Español (Nativo) o Python, Vue, React)"
               }}
             ]
           }}
