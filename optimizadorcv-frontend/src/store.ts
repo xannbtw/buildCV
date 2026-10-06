@@ -9,7 +9,7 @@ export const currentUser = ref<any>(null)
 export const cvData = ref({
   personal: {
     fullName: '',
-    jobTitle: '',
+    portfolioUrl: '',
     email: '',
     phone: '',
     summary: ''

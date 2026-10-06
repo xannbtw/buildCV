@@ -7,9 +7,9 @@ const emit = defineEmits<{
   (e: 'saved'): void
 }>()
 
-  const guardarCV = async () => {
+const guardarCV = async () => {
   const cvAbierto = savedCVs.value.find(cv => cv.id === currentCvId.value)
-  const sugerencia = cvAbierto ? cvAbierto.nombre : 'CV ' + cvData.value.personal.jobTitle
+  const sugerencia = cvAbierto ? cvAbierto.nombre : 'CV ' + cvData.value.personal.fullName
 
   const nombrePersonalizado = prompt('¿Con qué nombre quieres guardar este CV?', sugerencia)
   if (!nombrePersonalizado) return
@@ -259,8 +259,8 @@ const descargarPDF = () => {
             <input v-model="cvData.personal.fullName" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
           </div>
           <div>
-            <label class="text-xs text-zinc-600">Título Profesional</label>
-            <input v-model="cvData.personal.jobTitle" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
+            <label class="text-xs text-zinc-600">URL del Portafolio</label>
+            <input v-model="cvData.personal.portfolioUrl" type="url" placeholder="ej: https://linkedin.com/in/MiUsuario" class="w-full bg-zinc-200 border border-zinc-800 rounded p-2 text-zinc-600" />
           </div>
           <div>
             <label class="text-xs text-zinc-600">Correo Electronico</label>

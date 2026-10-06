@@ -70,7 +70,7 @@ const processCV = async () => {
 
 const iniciarCVEnBlanco = () => {
   cvData.value = {
-    personal: { fullName: '', jobTitle: '', email: '', phone: '', summary: '' },
+    personal: { fullName: '', portfolioUrl: '', email: '', phone: '', summary: '' },
     experience: [],
     education: [],
     skills: [],

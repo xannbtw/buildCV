@@ -1,5 +1,16 @@
 <script setup lang="ts">
 import { cvData } from '../../store'
+
+const limpiarurl = (url: string) => {
+  if (!url) return '';
+  let limpia = url.replace(/^https?:\/\//, '').replace(/^www\./, '');
+  limpia = limpia.split('?')[0];
+  if (limpia.endsWith('/')) {
+    limpia = limpia.slice(0, -1);
+  }
+  return limpia;
+};
+
 </script>
 
 
@@ -10,7 +21,16 @@ import { cvData } from '../../store'
       <h1 class="text-4xl font-bold mb-1">{{ cvData.personal?.fullName || 'Tu Nombre' }}</h1>
       <div class="flex flex-wrap justify-center items-center gap-2 text-sm mt-2">
         <span v-if="cvData.personal?.phone">{{cvData.personal?.phone}}</span>
-        <span v-if="cvData.personal?.jobTitle">| {{ cvData.personal.jobTitle }} |</span>
+        <span>|</span>
+        <a 
+          v-if="cvData.personal.portfolioUrl" 
+          :href="cvData.personal.portfolioUrl" 
+          target="_blank" 
+          class="hover:underline"
+        >
+          {{ limpiarurl(cvData.personal.portfolioUrl) }}
+        </a>
+        <span>|</span>
         <span v-if="cvData.personal?.email">{{ cvData.personal.email }}</span>
       </div>
     </header>
