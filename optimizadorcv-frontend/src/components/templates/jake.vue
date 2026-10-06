@@ -3,8 +3,7 @@ import { cvData } from '../../store'
 
 const limpiarurl = (url: string) => {
   if (!url) return '';
-  let limpia = url.replace(/^https?:\/\//, '').replace(/^www\./, '');
-  limpia = limpia.split('?')[0];
+  let limpia = url.replace(/^https?:\/\//, '').replace(/^www\./, '').split('?')[0] || '';
   if (limpia.endsWith('/')) {
     limpia = limpia.slice(0, -1);
   }
