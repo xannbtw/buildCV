@@ -25,7 +25,7 @@ const limpiarurl = (url: string) => {
           v-if="cvData.personal.portfolioUrl" 
           :href="cvData.personal.portfolioUrl" 
           target="_blank" 
-          class="hover:underline"
+          class="hover:underline text-cyan-900"
         >
           {{ limpiarurl(cvData.personal.portfolioUrl) }}
         </a>
