@@ -81,7 +81,7 @@ const cargarDatos = async () => {
       
       <nav class="mt-8 flex flex-col gap-2">
         <a href="#" @click.prevent="changeView('upload'); menuAbierto = false" :class="['px-4 py-2 cursor-pointer rounded-lg transition-colors font-medium', currentView === 'upload' ? 'bg-zinc-100 text-black' : 'text-zinc-500 hover:bg-zinc-100 hover:text-black']">Crear nuevo CV</a>
-        <a href="#" @click.prevent="changeView('templates'); menuAbierto = false" :class="['px-4 py-2 cursor-pointer rounded-lg transition-colors font-medium', currentView === 'templates' ? 'bg-zinc-100 text-black' : 'text-zinc-500 hover:bg-zinc-100 hover:text-black']">Plantillas</a>
+        <!-- <a href="#" @click.prevent="changeView('templates'); menuAbierto = false" :class="['px-4 py-2 cursor-pointer rounded-lg transition-colors font-medium', currentView === 'templates' ? 'bg-zinc-100 text-black' : 'text-zinc-500 hover:bg-zinc-100 hover:text-black']">Plantillas</a> -->
         <a href="#" @click.prevent="changeView('saved'); menuAbierto = false" :class="['px-4 py-2 cursor-pointer rounded-lg transition-colors font-medium', currentView === 'saved' ? 'bg-zinc-100 text-black' : 'text-zinc-500 hover:bg-zinc-100 hover:text-black']">Mis CVs guardados</a>
         <a href="#" @click.prevent="changeView('generate'); menuAbierto = false" :class="['px-4 py-2 cursor-pointer rounded-lg transition-colors font-medium', currentView === 'generate' ? 'bg-zinc-100 text-black' : 'text-zinc-500 hover:bg-zinc-100 hover:text-black']">Generar CV</a>
       </nav>
