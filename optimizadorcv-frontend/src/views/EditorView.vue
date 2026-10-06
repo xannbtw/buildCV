@@ -156,6 +156,21 @@ const eliminarEducacion = (index: number) => {
   }
 }
 
+const agregarProyecto = () => {
+  if (!cvData.value.projects) cvData.value.projects = []
+  cvData.value.projects.push({
+    name: '',
+    details: '',
+    description: ''
+  })
+}
+
+const eliminarProyecto = (index: number) => {
+  if (cvData.value.projects) {
+    cvData.value.projects.splice(index, 1)
+  }
+}
+
 const descargarPDF = () => {
   const elementoCV = document.getElementById('cv-preview')
   if (!elementoCV) return
@@ -292,18 +307,39 @@ const descargarPDF = () => {
           </div>
           
           <div class="flex flex-col gap-4">
-            <div v-for="(job, index) in cvData.education" :key="index" class="bg-zinc-200 p-3 rounded-lg border border-gray-800 relative">
+            <div v-for="(edu, index) in cvData.education" :key="index" class="bg-zinc-200 p-3 rounded-lg border border-gray-800 relative">
               
               <button @click="eliminarEducacion(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-400 text-xs font-bold">✕</button>
               
               <div class="grid grid-cols-2 gap-2 mb-2 pr-4">
-                <input v-model="job.institution" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Institucion" />
-                <input v-model="job.degree" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Grado" />
+                <input v-model="edu.institution" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Institucion" />
+                <input v-model="edu.degree" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Grado" />
               </div>
               
               <div class="grid grid-cols-2 gap-2 mb-2">
-                <input v-model="job.date" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Ej: Ene 2023 - Presente" />
+                <input v-model="edu.date" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Ej: Ene 2023 - Presente" />
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm text-zinc-600">Proyectos</h3>
+            <button @click="agregarProyecto" class="text-xs bg-zinc-200 hover:bg-zinc-200 text-zinc-600 px-2 py-1 rounded transition-colors">+ Añadir proyecto</button>
+          </div>
+          
+          <div class="flex flex-col gap-4">
+            <div v-for="(project, index) in cvData.projects" :key="index" class="bg-zinc-200 p-3 rounded-lg border border-gray-800 relative">
+              
+              <button @click="eliminarProyecto(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-400 text-xs font-bold">✕</button>
+              
+              <div class="grid grid-cols-2 gap-2 mb-2 pr-4">
+                <input v-model="project.name" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Nombre del proyecto" />
+                <input v-model="project.details" class="bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm" placeholder="Habilidades utilizadas en el proyecto..."></input>
+              </div>
+              
+              <textarea v-model="project.description" class="w-full bg-zinc-200 border border-gray-700 text-zinc-600 p-2 rounded text-sm min-h-[80px]" placeholder="Descripción del proyecto..."></textarea>
             </div>
           </div>
         </div>

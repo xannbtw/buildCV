@@ -57,6 +57,7 @@ const processCV = async () => {
     cvData.value.experience = datosNuevos.experience
     cvData.value.education = datosNuevos.education || []
     cvData.value.skills = datosNuevos.skills || []
+    cvData.value.projects = datosNuevos.projects || []
     
     emit('processed')
   } catch (error) {
@@ -72,7 +73,8 @@ const iniciarCVEnBlanco = () => {
     personal: { fullName: '', jobTitle: '', email: '', phone: '', summary: '' },
     experience: [],
     education: [],
-    skills: []
+    skills: [],
+    projects: []
   }
   emit('processed')
 }

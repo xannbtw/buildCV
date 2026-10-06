@@ -28,12 +28,8 @@ import { cvData } from '../../store'
       </div>
     </section>
 
-    <section class="mb-6">
+    <section class="mb-6" v-if="cvData.experience && cvData.experience.length > 0">
       <h2 class="text-lg font-bold border-b-2 border-black uppercase mb-3 pb-1">Experiencia Laboral</h2>
-      
-      <div v-if="!cvData.experience || cvData.experience.length === 0" class="text-gray-400 italic">
-        Añade tu experiencia laboral en el panel izquierdo.
-      </div>
 
       <div v-for="(exp, index) in cvData.experience" :key="index" class="mb-4">
         <div class="flex justify-between items-start gap-4 mb-1">
@@ -55,12 +51,8 @@ import { cvData } from '../../store'
       </div>
     </section>
 
-    <section class="mb-6">
+    <section class="mb-6" v-if="cvData.education && cvData.education.length > 0">
       <h2 class="text-lg font-bold border-b-2 border-black uppercase mb-3 pb-1">Educación</h2>
-      
-      <div v-if="!cvData.education || cvData.education.length === 0" class="text-gray-400 italic">
-        Añade tu educación en el panel izquierdo.
-      </div>
 
       <div v-for="(edu, index) in cvData.education" :key="index" class="mb-3">
         <div class="flex justify-between items-baseline mb-1">
@@ -75,12 +67,22 @@ import { cvData } from '../../store'
       </div>
     </section>
 
-    <section class="mb-6">
-      <h2 class="text-lg font-bold border-b-2 border-black uppercase mb-3 pb-1">Habilidades</h2>
-
-      <div v-if="!cvData.skills || cvData.skills.length === 0" class="text-gray-400 italic">
-        Añade tus habilidades en el panel izquierdo.
+    <section class="mb-6" v-if="cvData.projects && cvData.projects.length > 0">
+      <h2 class="text-lg font-bold border-b-2 border-black uppercase mb-3 pb-1">Proyectos</h2>
+        <div v-for="(proyecto, index) in cvData.projects" :key="index" class="mb-3">
+        <div class="flex justify-between items-baseline mb-1">
+          <div class="flex-1">
+            <span class="font-bold text-base">{{ proyecto.name || 'Nombre del proyecto' }}</span>
+            <span class="italic"> — {{ proyecto.details || 'Habilidades utilizadas' }}</span>
+          </div>
+        </div>
+        <p class="text-sm italic text-gray-800">{{ proyecto.description || 'Descripción del proyecto' }}</p>
       </div>
+
+    </section>
+
+    <section class="mb-6" v-if="cvData.skills && cvData.skills.length > 0">
+      <h2 class="text-lg font-bold border-b-2 border-black uppercase mb-3 pb-1">Habilidades</h2>
 
       <div class="flex flex-col gap-1">
         <div v-for="(skill, index) in cvData.skills" :key="index" class="text-sm text-gray-800">

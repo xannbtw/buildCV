@@ -43,6 +43,7 @@ const generarconIA = async () => {
     cvData.value.experience = datosNuevos.experience
     cvData.value.education = datosNuevos.education || []
     cvData.value.skills = datosNuevos.skills || []
+    cvData.value.projects = datosNuevos.projects || []
     
     emit('generated')
   } catch (error) {

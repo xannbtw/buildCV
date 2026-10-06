@@ -57,6 +57,11 @@ class Educacion(BaseModel):
     degree: str
     date: str
 
+class Proyectos(BaseModel): 
+    name: str
+    details: str
+    description: str
+
 class habiliades(BaseModel): 
     category: str = Field(description="La categoría de las habilidades (ej: Idiomas, Habilidades Técnicas, Herramientas, Habilidades Blandas)")   
     details: str = Field(description="Las habilidades separadas por comas (ej: Inglés (Bilingüe), Español (Nativo) o Python, Vue, React)")
@@ -89,6 +94,7 @@ async def generar_cv(datos: GenerarRequest):
     REGLA CRÍTICA: Si las instrucciones del usuario mencionan una experiencia laboral actual o nueva que NO estaba en el texto del currículum original, tienes estrictamente PERMITIDO y OBLIGADO extraer esos datos, redactarlos de forma profesional y agregarlos como un bloque nuevo dentro del arreglo 'experience'.
     Responde ÚNICA y EXCLUSIVAMENTE con el JSON final válido.
     REGLA DE HABILIDADES: El JSON de salida DEBE incluir el arreglo "skills" con la estructura [{{"category": "La categoría de las habilidades (ej: Idiomas, Habilidades Técnicas, Herramientas, Habilidades Blandas)", "details": "Las habilidades separadas por comas (ej: Inglés (Bilingüe), Español (Nativo) o Python, Vue, React)"}}]. Incluye TODAS las habilidades originales del CV y añade cualquier habilidad técnica nueva que el usuario mencione en sus instrucciones. Limitate a 6-8 habilidades (las mas relevantes para la oferta de empleo).    
+    REGLA DE PROYECTOS: El JSON de salida DEBE incluir el arreglo "projects" con la estructura [{{"name": "Nombre del proyecto", "details": "Tecnologias utilizadas", "description": "Descripcion del proyecto"}}]. Incluye TODOS los proyectos originales del CV y añade cualquier proyecto nuevo que el usuario mencione en sus instrucciones. Limitate a 6-8 proyectos (los mas relevantes para la oferta de empleo).    
     """
     
     max_reintentos = 4
@@ -142,6 +148,7 @@ async def procesar_pdf(file: UploadFile = File(...)):
 
           REGLA CRÍTICA PARA HABILIDADES: Debes buscar, identificar y extraer TODAS las habilidades (técnicas, blandas, software, herramientas, idiomas) mencionadas en el texto. Si el candidato no tiene una sección explícita de "Habilidades", 
           OBLIGATORIAMENTE debes deducirlas leyendo sus tareas en la experiencia laboral. El arreglo 'skills' SIEMPRE debe contener datos.
+          REGLA CRÍTICA PARA PROYECTOS: Debes buscar, identificar y extraer TODOS los proyectos mencionados en el texto. 
           
           Usa EXACTAMENTE esta estructura JSON. ESTÁ ESTRICTAMENTE PROHIBIDO omitir la llave "skills". Incluso si crees que el candidato no tiene habilidades, DEBES incluir "skills" en el JSON final (aunque sea con un arreglo vacío []). Limitate a 5 habilidades (selecciona las mas relevantes):
           {{
@@ -172,6 +179,13 @@ async def procesar_pdf(file: UploadFile = File(...)):
               {{
                 "category": "Categoria de la habilidad (ej. Idiomas, Habilidades Técnicas, Herramientas, Habilidades Blandas)",
                 "details": "Las habilidades separadas por comas (ej: Inglés (Bilingüe), Español (Nativo) o Python, Vue, React)"
+              }}
+            ],
+            "projects": [
+              {{
+                "name": "Nombre del proyecto",
+                "details": "Tecnologias utilizadas",
+                "description": "Descripcion del proyecto"
               }}
             ]
           }}
