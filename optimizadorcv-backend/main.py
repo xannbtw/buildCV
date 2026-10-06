@@ -71,6 +71,7 @@ class CVRespuesta(BaseModel):
     experience: List[Experiencia]
     education: List[Educacion]
     skills: List[habiliades]
+    projects: List[Proyectos]
 
 # endpoints 
 @app.post("/api/generar-cv")
