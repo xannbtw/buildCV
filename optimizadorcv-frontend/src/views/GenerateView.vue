@@ -10,10 +10,9 @@ const emit = defineEmits<{
 
 const generarconIA = async () => {
   if (!userPrompt.value.trim()) return
-  const tieneNombre = !!cvData.value.personal?.fullName?.trim()
-  const tieneExp = cvData.value.experience?.some(exp => exp.company?.trim() !== '')
+  
 
-  if (!tieneNombre || !tieneExp) {
+  if (!cvData.value.personal || !cvData.value.personal.fullName) {
     alert('Por favor, sube un CV primero antes de usar la IA.')
     return
   }
